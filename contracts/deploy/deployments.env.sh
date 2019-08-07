@@ -1,0 +1,4 @@
+export SYSTEM=0x2559d11bbcaf82b35848876e0bd66eddc8c337e5
+export REGISTRY=0x7fa10b89dde2c050def85e17d9dd9cfc0cb3ffe3
+export GUACTOKEN=0x3fc956bd7a2a861b23c816fa683a767db4c58585
+export MEMBERNFT=0xa1df06b078d4eca5d00a4ff0d753aeb690cfda37
