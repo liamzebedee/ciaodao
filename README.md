@@ -1,6 +1,17 @@
-guac
-====
+everest
+=======
 
-Guac is an experiment into building an unstoppable index. Emphasis on the **build**.
+Everest is a secret project in development. Come back later! ;)
 
-Checkout the [lightpaper](https://docs.google.com/document/d/1ekLFGnMsjDIRkjGPifbxHcJeUYLCEvhHISPCl5H1E6s/edit#) for more info.
+### Contracts
+
+Contracts are built with Dapptools, deployed with seth.
+
+### Frontend
+
+The dApp is built in Next.js and React/Redux.
+
+
+## License
+
+GPL v3.
