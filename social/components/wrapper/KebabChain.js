@@ -41,6 +41,7 @@ export class KebabChain extends Component {
 
     // if you haven't openedBox, return to login
     this.setState({ isAppReady: true });
+    window.ethereum.enable()
   }
 
   handleLogin = async () => {
@@ -85,10 +86,6 @@ export class KebabChain extends Component {
 
     return (
         <Box3Context.Provider value={contextValue}>
-            {
-             loggedIn || <Cover handleLogin={this.handleLogin} disableLogin={disableLogin} />
-            }
-
             {this.props.children}
         </Box3Context.Provider>
     );

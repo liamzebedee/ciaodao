@@ -1,17 +1,16 @@
-import HomePage from '../components/HomePage'
+import LandingPage from '../components/LandingPage'
 import { connect } from 'react-redux'
-import { loadNewestEntries } from '../actions/registry'
 import React, { Component } from 'react';
 
 import { with3Box } from '../components/wrapper/KebabChain'
 
-class HomePageContainer extends Component {
+class Container extends Component {
     componentDidMount() {
     }
 
     render() {
         return <>
-            <HomePage/>
+            <LandingPage/>
         </>
     }
 }
@@ -26,4 +25,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePageContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(Container)

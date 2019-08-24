@@ -3,23 +3,22 @@ import App, { Container } from 'next/app'
 import React from 'react'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-// import { ConnectedRouter } from 'connected-react-router'
-// import { history } from '../store'
-// import { Switch, Route } from 'react-router'
+
+
 import { PersistGate } from 'redux-persist/integration/react'
 import { KebabChain } from '../components/wrapper/KebabChain'
 import styled from 'styled-components'
+import { persistStore } from 'redux-persist';
 
 const ContainerStyled = styled.div`
 `
 
-// import Home from './index'
-// import Results from './index'
-
+export let persistor
 
 class MyApp extends App {
   render () {
     const { Component, pageProps, reduxStore } = this.props
+    persistor = persistStore(reduxStore);
     return <div>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,9 +43,11 @@ class MyApp extends App {
           <ContainerStyled>
             <Provider store={reduxStore}>
 
-              <KebabChain>
-                  <Component {...pageProps} />
-                  </KebabChain>
+              <PersistGate loading={null} persistor={persistor}>
+                <Component {...pageProps} />
+              </PersistGate>
+
+              
             </Provider>
           </ContainerStyled>
       </Container>

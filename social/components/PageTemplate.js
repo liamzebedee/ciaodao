@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import Search from '../components/Search'
-import Entry from '../components/Entry'
-import UserProfile from '../components/atoms/UserProfile'
 
 import styled from 'styled-components';
-
+import Head from 'next/head'
 
 const AppTitle = styled.h1`
     text-transform: lowercase;
@@ -97,20 +94,10 @@ import Link from 'next/link'
 
 
 function Home({ children, loading }) {
-    // const [loadAnimation, setLoadAnimation] = useState(true);
-
-    // useEffect(() => {
-    //     if(!loading) {
-    //         setTimeout(() => {
-    //             setLoadAnimation(false)
-    //         }, 2000)
-    //     }
-    // }, [loading])
-
-    return <Style>
-        
-        
-        {/* <LoadingBar className={loading && 'loading'}/> */}
+    return <Style className="container-fluid">
+        <Head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossOrigin="anonymous"/>
+        </Head>
 
         {children}
     </Style>
