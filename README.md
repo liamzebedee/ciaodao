@@ -1,17 +1,8 @@
-everest
+ciaodao
 =======
 
-Everest is a secret project in development. Come back later! ;)
+contracts - fundao/
 
-### Contracts
+dapp - frontend/
 
-Contracts are built with Dapptools, deployed with seth.
-
-### Frontend
-
-The dApp is built in Next.js and React/Redux.
-
-
-## License
-
-GPL v3.
+DAO data scraped from dapphub/aragon - datapop
