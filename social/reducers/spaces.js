@@ -1,7 +1,21 @@
+import { CREATE_GROUP_WEB3_SUCCESS } from "../sagas";
+
 const initialState = {
-    list: []
+    data: {},
+    list: [],
+    createdSpaces: []
 }
 
 export default function reduce(state = initialState, action) {
-    return state
+    switch(action.type) {
+        case CREATE_GROUP_WEB3_SUCCESS:
+            const { space } = action.payload
+            const { createdSpaces } = state
+            return {
+                ...state,
+                createdSpaces: createdSpaces.concat([ space ])
+            }
+        default:
+            return state
+    }
 }

@@ -97,7 +97,7 @@ module.exports =
 /*!**************************!*\
   !*** ./actions/index.js ***!
   \**************************/
-/*! exports provided: loadWeb3, connectBox3, visitSpaces, createSpace */
+/*! exports provided: loadWeb3, connectBox3, visitSpaces, createSpace, loadSpaces */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -106,6 +106,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "connectBox3", function() { return connectBox3; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "visitSpaces", function() { return visitSpaces; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createSpace", function() { return createSpace; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadSpaces", function() { return loadSpaces; });
 /* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
 
 function loadWeb3() {
@@ -131,6 +132,11 @@ function createSpace(name, membershipType, addressDetails) {
       membershipType: membershipType,
       addressDetails: addressDetails
     }
+  };
+}
+function loadSpaces() {
+  return {
+    type: LOAD_SPACES
   };
 }
 
@@ -641,14 +647,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _PageTemplate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PageTemplate */ "./components/PageTemplate.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux */ "redux");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../actions */ "./actions/index.js");
-/* harmony import */ var _components_spaces__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/spaces */ "./components/spaces.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../actions */ "./actions/index.js");
+/* harmony import */ var _components_spaces__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/spaces */ "./components/spaces.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! util */ "util");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_13__);
 
 
 
@@ -673,6 +683,9 @@ function _templateObject() {
 
 
 
+
+
+
 var MEMBERSHIP_TYPE_TOKEN = 'token';
 var MEMBERSHIP_TYPE_INVITE = 'invite';
 var PreTextarea = styled_components__WEBPACK_IMPORTED_MODULE_5___default.a.div(_templateObject());
@@ -684,27 +697,44 @@ var memedAddresses = addresses.map(function (addr, i) {
 }).join('\n');
 
 function Page(_ref) {
-  var createSpace = _ref.createSpace;
+  var createSpace = _ref.createSpace,
+      form = _ref.form;
+  var router = Object(next_router__WEBPACK_IMPORTED_MODULE_7__["useRouter"])();
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(true),
       _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
-      name = _useState2[0],
-      setName = _useState2[1];
+      showCreateSpaceModal = _useState2[0],
+      setShowCreateSpaceModal = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
       _useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState3, 2),
-      membershipType = _useState4[0],
-      setMembershipType = _useState4[1];
+      submitted = _useState4[0],
+      setSubmitted = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(+new Date()),
       _useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState5, 2),
-      addressDetails = _useState6[0],
-      setAddressDetails = _useState6[1];
+      modalReset = _useState6[0],
+      setModalReset = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(true),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
       _useState8 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState7, 2),
-      showCreateSpaceModal = _useState8[0],
-      setShowCreateSpaceModal = _useState8[1];
+      name = _useState8[0],
+      setName = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+      _useState10 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState9, 2),
+      membershipType = _useState10[0],
+      setMembershipType = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState12 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState11, 2),
+      addressDetails = _useState12[0],
+      setAddressDetails = _useState12[1];
+
+  function handleSubmit() {
+    setSubmitted(true);
+    createSpace(name, membershipType, addressDetails);
+  }
 
   function renderMembershipType() {
     var onChange = function onChange(ev) {
@@ -718,29 +748,29 @@ function Page(_ref) {
         return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 53
+            lineNumber: 68
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("small", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 54
+            lineNumber: 69
           },
           __self: this
         }, "Add ERC20 and ERC721 tokens:"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(PreTextarea, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 55
+            lineNumber: 70
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Control, {
+        }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Control, {
           as: "textarea",
           rows: "3",
           placeholder: memedAddresses,
           onChange: onChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 55
+            lineNumber: 70
           },
           __self: this
         })));
@@ -749,29 +779,29 @@ function Page(_ref) {
         return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 58
+            lineNumber: 73
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("small", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 59
+            lineNumber: 74
           },
           __self: this
         }, "Add Ethereum addresses:"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(PreTextarea, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 75
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Control, {
+        }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Control, {
           as: "textarea",
           rows: "3",
           placeholder: memedAddresses,
           onChange: onChange,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 75
           },
           __self: this
         })));
@@ -781,200 +811,233 @@ function Page(_ref) {
     }
   }
 
-  function handleSubmit() {
-    createSpace(name, membershipType, addressDetails);
+  var title;
+  var body;
+  var footer = react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Modal"].Footer, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 84
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+    variant: "secondary",
+    disabled: submitted,
+    onClick: function onClick() {
+      setShowCreateSpaceModal(false);
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 85
+    },
+    __self: this
+  }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+    variant: "primary",
+    disabled: submitted || !(name != "" && membershipType != "" && addressDetails.length > 0),
+    onClick: handleSubmit,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 91
+    },
+    __self: this
+  }, "Submit"));
+
+  if (form.step == 'success') {
+    title = 'Space created!';
+    body = react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 99
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+      variant: "primary",
+      onClick: function onClick() {
+        router.push("/spaces/".concat(form.space));
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 106
+      },
+      __self: this
+    }, "Go to space"));
+    footer = null;
+  } else {
+    title = 'Create a space';
+    body = react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 115
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Group, {
+      controlId: "exampleForm.ControlInput1",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 116
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Label, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 117
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("i", {
+      className: "fas fa-layer-group",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 117
+      },
+      __self: this
+    }), " Name"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Control, {
+      type: "text",
+      placeholder: "D\xF6ner DAO",
+      onChange: function onChange(ev) {
+        return setName(ev.target.value);
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 118
+      },
+      __self: this
+    })), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Group, {
+      controlId: "exampleForm.ControlInput1",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 121
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Form"].Label, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 122
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("i", {
+      className: "fa fa-user",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 122
+      },
+      __self: this
+    }), " How can people join?"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 124
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["ButtonGroup"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 125
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+      variant: "outline-primary",
+      active: membershipType == MEMBERSHIP_TYPE_TOKEN,
+      onClick: function onClick() {
+        setMembershipType(MEMBERSHIP_TYPE_TOKEN);
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 126
+      },
+      __self: this
+    }, "By token"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+      variant: "outline-secondary",
+      active: membershipType == MEMBERSHIP_TYPE_INVITE,
+      onClick: function onClick() {
+        setMembershipType(MEMBERSHIP_TYPE_INVITE);
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 132
+      },
+      __self: this
+    }, "By invite"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 140
+      },
+      __self: this
+    }), renderMembershipType(membershipType)));
   }
 
   return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_PageTemplate__WEBPACK_IMPORTED_MODULE_6__["default"], {
     className: "container",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 71
+      lineNumber: 147
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("h1", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 72
+      lineNumber: 148
     },
     __self: this
   }, "My spaces"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     className: "btn btn-primary",
     onClick: function onClick() {
-      return setShowCreateSpaceModal(true);
+      setSubmitted(false);
+      setName('');
+      setMembershipType('');
+      setAddressDetails([]);
+      setShowCreateSpaceModal(true);
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 73
+      lineNumber: 149
     },
     __self: this
-  }, "Create space"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_components_spaces__WEBPACK_IMPORTED_MODULE_11__["Spaces"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 74
-    },
-    __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Modal"], {
+  }, "Create space"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Modal"], {
     show: showCreateSpaceModal,
     onHide: function onHide() {
-      return setShowCreateSpaceModal(false);
+      setShowCreateSpaceModal(false);
+      setModalReset(+new Date());
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 76
+      lineNumber: 157
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Modal"].Header, {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Modal"].Header, {
     closeButton: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 77
+      lineNumber: 163
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Modal"].Title, {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Modal"].Title, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 78
+      lineNumber: 164
     },
     __self: this
-  }, "Create a space")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Modal"].Body, {
+  }, title)), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["Modal"].Body, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 80
+      lineNumber: 166
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"], {
+  }, body), footer), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_components_spaces__WEBPACK_IMPORTED_MODULE_12__["Spaces"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 81
+      lineNumber: 174
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Group, {
-    controlId: "exampleForm.ControlInput1",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 82
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Label, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 83
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("i", {
-    className: "fas fa-layer-group",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 83
-    },
-    __self: this
-  }), " Name"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Control, {
-    type: "text",
-    placeholder: "D\xF6ner DAO",
-    onChange: function onChange(ev) {
-      return setName(ev.target.value);
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 84
-    },
-    __self: this
-  })), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Group, {
-    controlId: "exampleForm.ControlInput1",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 87
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Form"].Label, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 88
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("i", {
-    className: "fa fa-user",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 88
-    },
-    __self: this
-  }), " How can people join?"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 90
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["ButtonGroup"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 91
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Button"], {
-    variant: "outline-primary",
-    active: membershipType == MEMBERSHIP_TYPE_TOKEN,
-    onClick: function onClick() {
-      setMembershipType(MEMBERSHIP_TYPE_TOKEN);
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 92
-    },
-    __self: this
-  }, "By token"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Button"], {
-    variant: "outline-secondary",
-    active: membershipType == MEMBERSHIP_TYPE_INVITE,
-    onClick: function onClick() {
-      setMembershipType(MEMBERSHIP_TYPE_INVITE);
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 98
-    },
-    __self: this
-  }, "By invite"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 106
-    },
-    __self: this
-  }), renderMembershipType(membershipType)))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Modal"].Footer, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 113
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Button"], {
-    variant: "secondary",
-    onClick: function onClick() {
-      setShowCreateSpaceModal(false);
-    },
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 115
-    },
-    __self: this
-  }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["Button"], {
-    variant: "primary",
-    disabled: !(name != "" && membershipType != "" && addressDetails.length > 0),
-    onClick: handleSubmit,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 121
-    },
-    __self: this
-  }, "Submit"))));
+  }));
 }
 
 function mapStateToProps(state, props) {
-  return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state.data);
+  return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state.data, {
+    form: state.flows['FLOW_CREATE_GROUP']
+  });
 }
 
 function mapDispatchToProps(dispatch) {
-  return Object(redux__WEBPACK_IMPORTED_MODULE_9__["bindActionCreators"])({
-    createSpace: _actions__WEBPACK_IMPORTED_MODULE_10__["createSpace"]
+  return Object(redux__WEBPACK_IMPORTED_MODULE_10__["bindActionCreators"])({
+    createSpace: _actions__WEBPACK_IMPORTED_MODULE_11__["createSpace"]
   }, dispatch);
 }
 
@@ -986,25 +1049,41 @@ function mapDispatchToProps(dispatch) {
 /*!******************************!*\
   !*** ./components/spaces.js ***!
   \******************************/
-/*! exports provided: Spaces */
+/*! exports provided: Spaces, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Spaces", function() { return Spaces; });
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/extends */ "./node_modules/@babel/runtime-corejs2/helpers/esm/extends.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral */ "./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/extends */ "./node_modules/@babel/runtime-corejs2/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral */ "./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js");
 /* harmony import */ var react_content_loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-content-loader */ "react-content-loader");
 /* harmony import */ var react_content_loader__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_content_loader__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _PageTemplate__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PageTemplate */ "./components/PageTemplate.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap */ "react-bootstrap");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../actions */ "./actions/index.js");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! util */ "util");
+/* harmony import */ var util__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(util__WEBPACK_IMPORTED_MODULE_18__);
+
 
 
 
@@ -1014,9 +1093,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var _jsxFileName = "/Users/liamz/Documents/open-source/everest/social/components/spaces.js";
 
-
 function _templateObject() {
-  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_6__["default"])(["\nwidth: 18rem;\n"]);
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_7__["default"])(["\nwidth: 18rem;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -1028,8 +1106,18 @@ function _templateObject() {
 
 
 
+
+
+
+
+
+
+
+
+
+
 var MyLoader = function MyLoader() {
-  return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_content_loader__WEBPACK_IMPORTED_MODULE_8___default.a, {
+  return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_content_loader__WEBPACK_IMPORTED_MODULE_8___default.a, {
     height: 160,
     width: 400,
     speed: 2,
@@ -1037,19 +1125,19 @@ var MyLoader = function MyLoader() {
     secondaryColor: "#ecebeb",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 5
+      lineNumber: 19
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("circle", {
+  }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
     cx: "10",
     cy: "20",
     r: "8",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 12
+      lineNumber: 26
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("rect", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("rect", {
     x: "25",
     y: "15",
     rx: "5",
@@ -1058,19 +1146,19 @@ var MyLoader = function MyLoader() {
     height: "10",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 13
+      lineNumber: 27
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("circle", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
     cx: "10",
     cy: "50",
     r: "8",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 28
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("rect", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("rect", {
     x: "25",
     y: "45",
     rx: "5",
@@ -1079,19 +1167,19 @@ var MyLoader = function MyLoader() {
     height: "10",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 29
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("circle", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
     cx: "10",
     cy: "80",
     r: "8",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 30
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("rect", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("rect", {
     x: "25",
     y: "75",
     rx: "5",
@@ -1100,19 +1188,19 @@ var MyLoader = function MyLoader() {
     height: "10",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 31
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("circle", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
     cx: "10",
     cy: "110",
     r: "8",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 32
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("rect", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("rect", {
     x: "25",
     y: "105",
     rx: "5",
@@ -1121,60 +1209,53 @@ var MyLoader = function MyLoader() {
     height: "10",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 33
     },
     __self: this
   }));
 };
 
-var SpaceCard = styled_components__WEBPACK_IMPORTED_MODULE_9___default.a.div(_templateObject());
+var SpaceCard = styled_components__WEBPACK_IMPORTED_MODULE_11___default.a.div(_templateObject());
 
 var Space = function Space(_ref) {
   var name = _ref.name,
       id = _ref.id;
-  return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(SpaceCard, {
+  return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(SpaceCard, {
     className: "card",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 42
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("img", {
+  }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("img", {
     className: "card-img-top",
     src: null,
     alt: "Card image cap",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 43
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+  }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
     className: "card-body",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 30
+      lineNumber: 44
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h5", {
+  }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h5", {
     className: "card-title",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 31
+      lineNumber: 45
     },
     __self: this
-  }, name), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", {
-    className: "card-text",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 32
-    },
-    __self: this
-  }, "Some quick example text to build on the card title and make up the bulk of the card's content."), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+  }, name), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("a", {
     href: "/spaces/".concat(id),
     className: "btn btn-dark",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 33
+      lineNumber: 47
     },
     __self: this
   }, "Open group")));
@@ -1183,41 +1264,41 @@ var Space = function Space(_ref) {
 var Spaces =
 /*#__PURE__*/
 function (_React$Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(Spaces, _React$Component);
+  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_6__["default"])(Spaces, _React$Component);
 
   function Spaces() {
-    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, Spaces);
+    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, Spaces);
 
-    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Spaces).apply(this, arguments));
+    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Spaces).apply(this, arguments));
   }
 
-  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Spaces, [{
+  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(Spaces, [{
     key: "render",
     value: function render() {
       var spaces = [{
         name: "Foobar",
         id: "0x"
       }];
-      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 46
+          lineNumber: 60
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(MyLoader, {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(MyLoader, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 47
+          lineNumber: 61
         },
         __self: this
       }), spaces.map(function (d, i) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(Space, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+        return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(Space, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__["default"])({
           d: d
         }, {
           key: i,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 48
+            lineNumber: 62
           },
           __self: this
         }));
@@ -1226,7 +1307,19 @@ function (_React$Component) {
   }]);
 
   return Spaces;
-}(react__WEBPACK_IMPORTED_MODULE_7___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_9___default.a.Component);
+
+function mapStateToProps(state, props) {
+  return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state.data, {
+    spaces: state.spaces
+  });
+}
+
+function mapDispatchToProps(dispatch) {
+  return Object(redux__WEBPACK_IMPORTED_MODULE_16__["bindActionCreators"])({}, dispatch);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_10__["connect"])(mapStateToProps, mapDispatchToProps)(Spaces));
 
 /***/ }),
 
@@ -3568,6 +3661,44 @@ var initialState = {
 
 /***/ }),
 
+/***/ "./reducers/flows.js":
+/*!***************************!*\
+  !*** ./reducers/flows.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
+
+
+
+var FLOW_CREATE_GROUP = 'FLOW_CREATE_GROUP';
+
+var initialState = Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, FLOW_CREATE_GROUP, {
+  step: 'start'
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _sagas__WEBPACK_IMPORTED_MODULE_2__["CREATE_GROUP_WEB3_SUCCESS"]:
+      return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, FLOW_CREATE_GROUP, Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, action.payload, {
+        step: 'success'
+      })));
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -3579,14 +3710,17 @@ var initialState = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _spaces__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spaces */ "./reducers/spaces.js");
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data */ "./reducers/data.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "redux");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _flows__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./flows */ "./reducers/flows.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "redux");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_2__["combineReducers"])({
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_3__["combineReducers"])({
   spaces: _spaces__WEBPACK_IMPORTED_MODULE_0__["default"],
-  data: _data__WEBPACK_IMPORTED_MODULE_1__["default"]
+  data: _data__WEBPACK_IMPORTED_MODULE_1__["default"],
+  flows: _flows__WEBPACK_IMPORTED_MODULE_2__["default"]
 }));
 
 /***/ }),
@@ -3601,13 +3735,30 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return reduce; });
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
+
+
 var initialState = {
-  list: []
+  data: {},
+  list: [],
+  createdSpaces: []
 };
 function reduce() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
-  return state;
+
+  switch (action.type) {
+    case _sagas__WEBPACK_IMPORTED_MODULE_1__["CREATE_GROUP_WEB3_SUCCESS"]:
+      var space = action.payload.space;
+      var createdSpaces = state.createdSpaces;
+      return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+        createdSpaces: createdSpaces.concat([space])
+      });
+
+    default:
+      return state;
+  }
 }
 
 /***/ }),
@@ -3616,7 +3767,7 @@ function reduce() {
 /*!************************!*\
   !*** ./sagas/index.js ***!
   \************************/
-/*! exports provided: LOAD_WEB3, LOAD_BOX3, WEB3_LOADING, LOAD_BOX3_PENDING, LOAD_BOX3_COMPLETE, VISIT_SPACES, CREATE_GROUP, CREATE_GROUP_WEB3_BEGIN, loadWeb3, loadBox3, visitSpaces, loadSpace, createGroup, default */
+/*! exports provided: LOAD_WEB3, LOAD_BOX3, WEB3_LOADING, LOAD_BOX3_PENDING, LOAD_BOX3_COMPLETE, VISIT_SPACES, CREATE_GROUP, CREATE_GROUP_WEB3_BEGIN, CREATE_GROUP_WEB3_SUCCESS, loadWeb3, loadBox3, visitSpaces, createGroup, loadSpaces, loadSpace, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3629,11 +3780,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VISIT_SPACES", function() { return VISIT_SPACES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_GROUP", function() { return CREATE_GROUP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_GROUP_WEB3_BEGIN", function() { return CREATE_GROUP_WEB3_BEGIN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_GROUP_WEB3_SUCCESS", function() { return CREATE_GROUP_WEB3_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadWeb3", function() { return loadWeb3; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadBox3", function() { return loadBox3; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "visitSpaces", function() { return visitSpaces; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadSpace", function() { return loadSpace; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGroup", function() { return createGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadSpaces", function() { return loadSpaces; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadSpace", function() { return loadSpace; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _callee; });
 /* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "./node_modules/@babel/runtime-corejs2/core-js/promise.js");
 /* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__);
@@ -3670,11 +3823,14 @@ _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(l
 _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(visitSpaces),
     _marked4 =
 /*#__PURE__*/
-_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(loadSpace),
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(createGroup),
     _marked5 =
 /*#__PURE__*/
-_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(createGroup),
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(loadSpaces),
     _marked6 =
+/*#__PURE__*/
+_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(loadSpace),
+    _marked7 =
 /*#__PURE__*/
 _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(_callee);
 
@@ -3686,6 +3842,8 @@ _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(_
 
 
 var provider;
+var signer;
+var MAINNET = 1;
 var chainId = null;
 var LOAD_WEB3 = 'LOAD_WEB3';
 var LOAD_BOX3 = 'LOAD_BOX3';
@@ -3695,6 +3853,7 @@ var LOAD_BOX3_COMPLETE = 'LOAD_BOX3_COMPLETE';
 var VISIT_SPACES = 'VISIT_SPACES';
 var CREATE_GROUP = 'CREATE_GROUP';
 var CREATE_GROUP_WEB3_BEGIN = 'CREATE_GROUP_WEB3_BEGIN';
+var CREATE_GROUP_WEB3_SUCCESS = 'CREATE_GROUP_WEB3_SUCCESS';
 
 function getArtifact(name) {
   var artifact = __webpack_require__("./chain sync recursive ^\\.\\/.*\\.json$")("./".concat(name, ".json"));
@@ -3710,37 +3869,50 @@ function _getDeployment() {
   _getDeployment = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
   /*#__PURE__*/
   _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee2(artifact) {
-    var keys, deploy;
-    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee2$(_context7) {
+    var networks, keys, deploy;
+    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee2$(_context8) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
+            networks = artifact.networks;
             keys = _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_1___default()(artifact.networks);
             keys = keys.sort();
 
             if (!(keys.length === 0)) {
-              _context7.next = 4;
+              _context8.next = 5;
               break;
             }
 
             throw new Error("no deployments");
 
-          case 4:
-            deploy = keys[chainId];
+          case 5:
+            if (!chainId) {
+              _context8.next = 11;
+              break;
+            }
+
+            deploy = networks[chainId];
 
             if (deploy) {
-              _context7.next = 7;
+              _context8.next = 9;
               break;
             }
 
             throw new Error("no deployment");
 
-          case 7:
-            return _context7.abrupt("return", deploy.address.toLowerCase());
+          case 9:
+            _context8.next = 12;
+            break;
 
-          case 8:
+          case 11:
+            deploy = networks[keys[0]];
+
+          case 12:
+            return _context8.abrupt("return", deploy.address.toLowerCase());
+
+          case 13:
           case "end":
-            return _context7.stop();
+            return _context8.stop();
         }
       }
     }, _callee2);
@@ -3756,18 +3928,18 @@ function _syncBox() {
   _syncBox = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
   /*#__PURE__*/
   _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee3(box) {
-    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee3$(_context8) {
+    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee3$(_context9) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
-            _context8.next = 2;
+            _context9.next = 2;
             return new _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default.a(function (res, rej) {
               box.onSyncDone(res);
             });
 
           case 2:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
     }, _callee3);
@@ -3776,18 +3948,21 @@ function _syncBox() {
 }
 
 function loadWeb3() {
-  var network;
+  var addresses;
   return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function loadWeb3$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          provider = new ethers__WEBPACK_IMPORTED_MODULE_9__["ethers"].providers.Web3Provider(window.ethereum);
-          _context.next = 3;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(provider.getNetwork);
+          _context.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(window.ethereum.enable);
 
-        case 3:
-          network = _context.sent;
-          chainId = network.chainId;
+        case 2:
+          addresses = _context.sent;
+          // provider = new ethers.providers.Web3Provider(window.ethereum);
+          provider = new ethers__WEBPACK_IMPORTED_MODULE_9__["ethers"].providers.Web3Provider(web3.currentProvider);
+          signer = provider.getSigner(0); // let network = yield call(provider.getNetwork)
+          // chainId = MAINNET
+          // chainId = MAINNET
 
         case 5:
         case "end":
@@ -3867,107 +4042,134 @@ function visitSpaces() {
     }
   }, _marked3);
 }
-function loadSpace() {
-  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function loadSpace$(_context4) {
+function createGroup(_ref) {
+  var payload, name, membershipType, addressDetails, artifact, addr, contract, tx, receipt, spaceEvent, args, space;
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function createGroup$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          _3box__WEBPACK_IMPORTED_MODULE_5___default.a.getSpace(address, name, opts);
-
-        case 1:
-        case "end":
-          return _context4.stop();
-      }
-    }
-  }, _marked4);
-}
-function createGroup(_ref) {
-  var payload, name, membershipType, addressDetails, artifact, addr, contract, tx, receipt, spaceEvent;
-  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function createGroup$(_context5) {
-    while (1) {
-      switch (_context5.prev = _context5.next) {
-        case 0:
           payload = _ref.payload;
           name = payload.name, membershipType = payload.membershipType, addressDetails = payload.addressDetails;
-          _context5.next = 4;
+          _context4.next = 4;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["put"])({
             type: CREATE_GROUP_WEB3_BEGIN
           });
 
         case 4:
           artifact = getArtifact('SpaceCadetFactory');
-          _context5.next = 7;
+          _context4.next = 7;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(getDeployment, artifact);
 
         case 7:
-          addr = _context5.sent;
-          contract = new ethers__WEBPACK_IMPORTED_MODULE_9__["ethers"].Contract(addr, artifact.abi, provider);
-          debugger;
+          addr = _context4.sent;
+          contract = new ethers__WEBPACK_IMPORTED_MODULE_9__["ethers"].Contract(addr, artifact.abi, signer);
 
           if (!(membershipType == _components_SpacesPage__WEBPACK_IMPORTED_MODULE_10__["MEMBERSHIP_TYPE_TOKEN"])) {
-            _context5.next = 16;
+            _context4.next = 15;
             break;
           }
 
-          _context5.next = 13;
+          _context4.next = 12;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(contract.functions.createERC20Space, name, addressDetails[0]);
 
-        case 13:
-          tx = _context5.sent;
-          _context5.next = 20;
+        case 12:
+          tx = _context4.sent;
+          _context4.next = 19;
           break;
 
-        case 16:
+        case 15:
           if (!(membershipType == _components_SpacesPage__WEBPACK_IMPORTED_MODULE_10__["MEMBERSHIP_TYPE_INVITE"])) {
-            _context5.next = 20;
+            _context4.next = 19;
             break;
           }
 
-          _context5.next = 19;
+          _context4.next = 18;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(contract.functions.createSpace, name, addressDetails);
 
+        case 18:
+          tx = _context4.sent;
+
         case 19:
-          tx = _context5.sent;
+          _context4.next = 21;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(tx.wait);
 
-        case 20:
-          receipt = Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["call"])(tx.wait);
+        case 21:
+          receipt = _context4.sent;
           spaceEvent = receipt.events.pop();
-          debugger;
-          console.log(spaceEvent);
+          args = spaceEvent.args;
+          space = args.space;
+          _context4.next = 27;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["put"])({
+            type: CREATE_GROUP_WEB3_SUCCESS,
+            payload: {
+              name: name,
+              space: space
+            }
+          });
 
-        case 24:
+        case 27:
+          _context4.next = 29;
+          return loadSpace(space);
+
+        case 29:
+        case "end":
+          return _context4.stop();
+      }
+    }
+  }, _marked4);
+}
+function loadSpaces() {
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function loadSpaces$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
         case "end":
           return _context5.stop();
       }
     }
   }, _marked5);
 }
-function _callee() {
-  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context6) {
+function loadSpace(addr) {
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function loadSpace$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          _context6.next = 2;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(LOAD_WEB3, loadWeb3);
-
-        case 2:
-          _context6.next = 4;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(LOAD_BOX3, loadBox3);
-
-        case 4:
-          _context6.next = 6;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(VISIT_SPACES, visitSpaces);
-
-        case 6:
-          _context6.next = 8;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(CREATE_GROUP, createGroup);
-
-        case 8:
         case "end":
           return _context6.stop();
       }
     }
   }, _marked6);
+}
+function _callee() {
+  return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(LOAD_WEB3, loadWeb3);
+
+        case 2:
+          _context7.next = 4;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(LOAD_BOX3, loadBox3);
+
+        case 4:
+          _context7.next = 6;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(VISIT_SPACES, visitSpaces);
+
+        case 6:
+          _context7.next = 8;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(CREATE_GROUP, createGroup);
+
+        case 8:
+          _context7.next = 10;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_4__["takeLatest"])(LOAD_SPACES, loadSpaces);
+
+        case 10:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  }, _marked7);
 }
 
 /***/ }),
@@ -4006,7 +4208,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var persistConfig = {
   key: 'root',
-  storage: redux_persist_lib_storage__WEBPACK_IMPORTED_MODULE_6___default.a
+  storage: redux_persist_lib_storage__WEBPACK_IMPORTED_MODULE_6___default.a,
+  blacklist: ['flows']
 };
 var sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_4___default()();
 var composeEnhancers = Object(redux_devtools_extension__WEBPACK_IMPORTED_MODULE_3__["composeWithDevTools"])({});
@@ -4514,6 +4717,17 @@ module.exports = require("styled-jsx/style");
 /***/ (function(module, exports) {
 
 module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("util");
 
 /***/ }),
 

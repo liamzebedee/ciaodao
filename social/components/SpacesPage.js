@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import styled from 'styled-components';
 import PageTemplate from "./PageTemplate"
+import { useRouter } from 'next/router'
 
 
 import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
@@ -10,6 +11,8 @@ import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace } from '../actions'
 import { Spaces } from "../components/spaces";
+import { format } from "util";
+import { Router } from "next/router";
 
 
 export const MEMBERSHIP_TYPE_TOKEN = 'token'
@@ -35,19 +38,31 @@ const memedAddresses = addresses.map((addr, i) => {
     return addr.slice(0, addr.length - meme.length) + meme
 }).join('\n')
 
-function Page({ createSpace }) {
+
+function Page({ createSpace, form }) {
+    const router = useRouter()
+    
+
+    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(true);
+    const [submitted, setSubmitted] = useState(false)
+    const [modalReset, setModalReset] = useState(+new Date)
     const [name, setName] = useState('')
     const [membershipType, setMembershipType] = useState('')
     const [addressDetails, setAddressDetails] = useState([])
-    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(true);
+
+    function handleSubmit() {
+        setSubmitted(true)
+        createSpace(name, membershipType, addressDetails)
+    }
+
 
     function renderMembershipType() {
-        const onChange = (ev) => {
+        let onChange = (ev) => {
             const str = ev.target.value
             const addresses = str.split('\n')
             setAddressDetails(addresses)
         }
-
+    
         switch(membershipType){
             case MEMBERSHIP_TYPE_TOKEN:
                 return <div>
@@ -64,71 +79,106 @@ function Page({ createSpace }) {
         }
     }
 
-    function handleSubmit() {
-        createSpace(name, membershipType, addressDetails)
+    let title;
+    let body;
+    let footer = <Modal.Footer>
+        <Button variant="secondary" disabled={submitted} onClick={() => {
+            setShowCreateSpaceModal(false)
+        }}>
+            Cancel
+        </Button>
+        
+        <Button variant="primary" disabled={submitted || !(name != "" && membershipType != "" && addressDetails.length > 0)} onClick={handleSubmit}>
+            Submit
+        </Button>
+
+    </Modal.Footer>
+
+    if(form.step == 'success') {
+        title = 'Space created!'
+        body = <div>
+            {/* <Button variant="secondary" onClick={() => {
+                setShowCreateSpaceModal(false)
+            }}>
+                Back to spaces
+            </Button>
+             */}
+            <Button variant="primary" onClick={() => {
+                router.push(`/spaces/${form.space}`)
+            }}>
+                Go to space
+            </Button>
+        </div>
+        footer = null
+    } else {
+        title = 'Create a space'
+        body = <Form>
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label><i className="fas fa-layer-group"></i> Name</Form.Label>
+                <Form.Control type="text" placeholder="Döner DAO" onChange={(ev) => setName(ev.target.value)}/>
+            </Form.Group>
+
+            <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label><i className='fa fa-user'/> How can people join?</Form.Label>
+                
+                <div>
+                <ButtonGroup>
+                <Button variant="outline-primary" active={membershipType == MEMBERSHIP_TYPE_TOKEN} onClick={() => {
+                    setMembershipType(MEMBERSHIP_TYPE_TOKEN)
+                }}>
+                By token
+                </Button>
+
+                <Button variant="outline-secondary" active={membershipType == MEMBERSHIP_TYPE_INVITE} onClick={() => {
+                    setMembershipType(MEMBERSHIP_TYPE_INVITE)
+                }}>
+                By invite
+                </Button>
+                </ButtonGroup>
+                </div>
+                
+                <br/>
+                {renderMembershipType(membershipType)}
+                
+            </Form.Group>
+        </Form>
     }
 
     return <PageTemplate className="container">
         <h1>My spaces</h1>
-        <button className="btn btn-primary" onClick={() => setShowCreateSpaceModal(true)}>Create space</button>
-        <Spaces/>
+        <button className="btn btn-primary" onClick={() => {
+            setSubmitted(false)
+            setName('')
+            setMembershipType('')
+            setAddressDetails([])
+            setShowCreateSpaceModal(true)
+        }}>Create space</button>
 
-        <Modal show={showCreateSpaceModal} onHide={() => setShowCreateSpaceModal(false)}>
+        <Modal 
+        show={showCreateSpaceModal} 
+        onHide={() => {
+            setShowCreateSpaceModal(false)
+            setModalReset(+new Date)
+        }}>
             <Modal.Header closeButton>
-                <Modal.Title>Create a space</Modal.Title>
+                <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Label><i className="fas fa-layer-group"></i> Name</Form.Label>
-                        <Form.Control type="text" placeholder="Döner DAO" onChange={(ev) => setName(ev.target.value)}/>
-                    </Form.Group>
-
-                    <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Label><i className='fa fa-user'/> How can people join?</Form.Label>
-                        
-                        <div>
-                        <ButtonGroup>
-                        <Button variant="outline-primary" active={membershipType == MEMBERSHIP_TYPE_TOKEN} onClick={() => {
-                            setMembershipType(MEMBERSHIP_TYPE_TOKEN)
-                        }}>
-                        By token
-                        </Button>
-
-                        <Button variant="outline-secondary" active={membershipType == MEMBERSHIP_TYPE_INVITE} onClick={() => {
-                            setMembershipType(MEMBERSHIP_TYPE_INVITE)
-                        }}>
-                        By invite
-                        </Button>
-                        </ButtonGroup>
-                        </div>
-                        
-                        <br/>
-                        {renderMembershipType(membershipType)}
-                        
-                    </Form.Group>
-                </Form>
-
+                {body}
             </Modal.Body>
-            <Modal.Footer>
-            
-            <Button variant="secondary" onClick={() => {
-                setShowCreateSpaceModal(false)
-            }}>
-                Cancel
-            </Button>
+            {footer}
 
-            <Button variant="primary" disabled={!(name != "" && membershipType != "" && addressDetails.length > 0)} onClick={handleSubmit}>
-                Submit
-            </Button>
-            </Modal.Footer>
         </Modal>
+
+
+        <Spaces/>
     </PageTemplate>
 }
 
 function mapStateToProps(state, props) {
     return {
-        ...state.data
+        ...state.data,
+        form: state.flows['FLOW_CREATE_GROUP']
     }
 }
 

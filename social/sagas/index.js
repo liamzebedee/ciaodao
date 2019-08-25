@@ -7,6 +7,10 @@ import { ethers, ContractFactory } from 'ethers';
 import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/SpacesPage';
 
 let provider
+let signer 
+
+const MAINNET = 1
+
 let chainId = null
 
 export const LOAD_WEB3 = 'LOAD_WEB3'
@@ -19,6 +23,7 @@ export const VISIT_SPACES = 'VISIT_SPACES'
 
 export const CREATE_GROUP = 'CREATE_GROUP'
 export const CREATE_GROUP_WEB3_BEGIN = 'CREATE_GROUP_WEB3_BEGIN'
+export const CREATE_GROUP_WEB3_SUCCESS = 'CREATE_GROUP_WEB3_SUCCESS'
 
 function getArtifact(name) {
     const artifact = require(`../chain/${name}.json`)
@@ -26,12 +31,21 @@ function getArtifact(name) {
 }
 
 async function getDeployment(artifact) {
+    let networks = artifact.networks
     let keys = Object.keys(artifact.networks)
     keys = keys.sort()
     if(keys.length === 0) throw new Error("no deployments")
-    const deploy = keys[chainId]
-    if(!deploy) throw new Error("no deployment")
+
+    let deploy
+    if(chainId) {
+        deploy = networks[chainId]
+        if(!deploy) throw new Error("no deployment")
+    } else {
+        deploy = networks[keys[0]]
+    }
+    
     return deploy.address.toLowerCase()
+    
 }
 
 
@@ -42,9 +56,13 @@ async function syncBox(box) {
 }
 
 export function* loadWeb3() {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    let network = yield call(provider.getNetwork)
-    chainId = network.chainId
+    const addresses = yield call(window.ethereum.enable)
+    // provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider = new ethers.providers.Web3Provider(web3.currentProvider)
+    signer = provider.getSigner(0);
+    // let network = yield call(provider.getNetwork)
+    // chainId = MAINNET
+    // chainId = MAINNET
 }
 
 export function* loadBox3() {
@@ -90,10 +108,6 @@ export function* visitSpaces() {
     Router.push('/spaces')
 }
 
-export function* loadSpace() {
-    Box.getSpace(address, name, opts)
-}
-
 export function* createGroup({ payload }) {
     const { name, membershipType, addressDetails } = payload
 
@@ -106,10 +120,8 @@ export function* createGroup({ payload }) {
     const contract = new ethers.Contract( 
         addr, 
         artifact.abi, 
-        provider 
+        signer
     )
-
-    debugger
     
     let tx
 
@@ -127,10 +139,31 @@ export function* createGroup({ payload }) {
         )
     }
 
-    let receipt = call(tx.wait)
+    let receipt = yield call(tx.wait)
     let spaceEvent = receipt.events.pop()
-    debugger
-    console.log(spaceEvent)
+
+    let { args } = spaceEvent
+    let { space } = args;
+    
+    yield put({
+        type: CREATE_GROUP_WEB3_SUCCESS,
+        payload: {
+            name,
+            space
+        }
+    })
+
+    yield loadSpace(space)
+}
+
+export function* loadSpaces() {
+
+}
+
+export function* loadSpace(addr) {
+    // this.props.spaces.list
+    // Box.getSpace(address, name, opts)
+    
 }
 
 export default function* () {
@@ -138,4 +171,5 @@ export default function* () {
     yield takeLatest(LOAD_BOX3, loadBox3)
     yield takeLatest(VISIT_SPACES, visitSpaces)
     yield takeLatest(CREATE_GROUP, createGroup)
+    yield takeLatest(LOAD_SPACES, loadSpaces)
 }

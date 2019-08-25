@@ -1,5 +1,19 @@
 import ContentLoader from "react-content-loader"
-import styled from 'styled-components'
+import React, { useState } from "react";
+import { connect } from 'react-redux'
+
+import styled from 'styled-components';
+import PageTemplate from "./PageTemplate"
+import { useRouter } from 'next/router'
+
+
+import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
+import Link from 'next/link'
+import { bindActionCreators } from "redux";
+import { createSpace } from '../actions'
+
+import { format } from "util";
+import { Router } from "next/router";
 
 const MyLoader = () => (
     <ContentLoader 
@@ -26,13 +40,13 @@ width: 18rem;
 `
 const Space = ({ name, id }) => {
     return <SpaceCard className="card">
-  <img className="card-img-top" src={null} alt="Card image cap"/>
-  <div className="card-body">
-    <h5 className="card-title">{name}</h5>
-    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href={`/spaces/${id}`} className="btn btn-dark">Open group</a>
-  </div>
-</SpaceCard>
+      <img className="card-img-top" src={null} alt="Card image cap"/>
+      <div className="card-body">
+        <h5 className="card-title">{name}</h5>
+        {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
+        <a href={`/spaces/${id}`} className="btn btn-dark">Open group</a>
+      </div>
+    </SpaceCard>
 }
 
 export class Spaces extends React.Component {
@@ -41,7 +55,7 @@ export class Spaces extends React.Component {
             {
                 name: "Foobar",
                 id: "0x"
-            }
+            },
         ]
         return <div>
             <MyLoader/>
@@ -49,3 +63,21 @@ export class Spaces extends React.Component {
         </div>
     }
 }
+
+
+function mapStateToProps(state, props) {
+  return {
+      ...state.data,
+      spaces: state.spaces
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+      {
+      },
+      dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Spaces)

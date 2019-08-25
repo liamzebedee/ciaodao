@@ -11,6 +11,7 @@ import sagas from '../sagas'
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: ['flows']
 }
 
 const sagaMiddleware = createSagaMiddleware()

@@ -26,3 +26,9 @@ export function createSpace(name, membershipType, addressDetails) {
         }
     }
 }
+
+export function loadSpaces() {
+    return {
+        type: LOAD_SPACES
+    }
+}
