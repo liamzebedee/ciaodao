@@ -139,10 +139,10 @@ import { bindActionCreators } from "redux";
 
 function LandingPage({ connectBox3, data, visitSpaces }) {
     const { loadingWeb3, loadingBox3, loggedIn, myAddress } = data
-    
+
     return <PageTemplate>
         <HeroBlock>
-            <Hero>DAOBOOK.</Hero>
+            <Hero>dirty DAO.</Hero>
         </HeroBlock>
 
         <center>

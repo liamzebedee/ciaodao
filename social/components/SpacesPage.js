@@ -8,11 +8,12 @@ import PageTemplate from "./PageTemplate"
 import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
+import { createSpace } from '../actions'
 import { Spaces } from "../components/spaces";
 
 
-const MEMBERSHIP_TYPE_TOKEN = 'token'
-const MEMBERSHIP_TYPE_INVITE = 'invite'
+export const MEMBERSHIP_TYPE_TOKEN = 'token'
+export const MEMBERSHIP_TYPE_INVITE = 'invite'
 
 const PreTextarea = styled.div`
     textarea {
@@ -34,26 +35,37 @@ const memedAddresses = addresses.map((addr, i) => {
     return addr.slice(0, addr.length - meme.length) + meme
 }).join('\n')
 
-function Page({ }) {
-    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(true);
+function Page({ createSpace }) {
+    const [name, setName] = useState('')
     const [membershipType, setMembershipType] = useState('')
-
+    const [addressDetails, setAddressDetails] = useState([])
+    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(true);
 
     function renderMembershipType() {
+        const onChange = (ev) => {
+            const str = ev.target.value
+            const addresses = str.split('\n')
+            setAddressDetails(addresses)
+        }
+
         switch(membershipType){
             case MEMBERSHIP_TYPE_TOKEN:
                 return <div>
                     <small>Add ERC20 and ERC721 tokens:</small>
-                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses} /></PreTextarea>
+                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses} onChange={onChange}/></PreTextarea>
                 </div>
             case MEMBERSHIP_TYPE_INVITE:
                 return <div>
                     <small>Add Ethereum addresses:</small>
-                    <PreTextarea><Form.Control as="textarea" rows="3" /></PreTextarea>
+                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses} onChange={onChange}/></PreTextarea>
                 </div>
             default:
                 return null
         }
+    }
+
+    function handleSubmit() {
+        createSpace(name, membershipType, addressDetails)
     }
 
     return <PageTemplate className="container">
@@ -68,8 +80,8 @@ function Page({ }) {
             <Modal.Body>
                 <Form>
                     <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Label><i class="fas fa-layer-group"></i> Name</Form.Label>
-                        <Form.Control type="text" placeholder="Indian Kebabs" />
+                        <Form.Label><i className="fas fa-layer-group"></i> Name</Form.Label>
+                        <Form.Control type="text" placeholder="Döner DAO" onChange={(ev) => setName(ev.target.value)}/>
                     </Form.Group>
 
                     <Form.Group controlId="exampleForm.ControlInput1">
@@ -94,34 +106,19 @@ function Page({ }) {
                         <br/>
                         {renderMembershipType(membershipType)}
                         
-
-                        {/* Add Ethereum addresses:
-                        <Form.Control as="textarea" rows="3" />
-                        
-                        or--
-
-                        Membership by token
-                        <Form.Control as="textarea" rows="3" /> */}
-                        
-
-                        
                     </Form.Group>
                 </Form>
 
-
-                
-
-
             </Modal.Body>
             <Modal.Footer>
+            
             <Button variant="secondary" onClick={() => {
                 setShowCreateSpaceModal(false)
             }}>
                 Cancel
             </Button>
-            <Button variant="primary" onClick={() => {
-                setShowCreateSpaceModal(false)
-            }}>
+
+            <Button variant="primary" disabled={!(name != "" && membershipType != "" && addressDetails.length > 0)} onClick={handleSubmit}>
                 Submit
             </Button>
             </Modal.Footer>
@@ -138,6 +135,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
+            createSpace
         },
         dispatch
     )

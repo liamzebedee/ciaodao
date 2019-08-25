@@ -45,7 +45,7 @@ export class Spaces extends React.Component {
         ]
         return <div>
             <MyLoader/>
-            {spaces.map(Space)}
+            {spaces.map((d, i) => <Space {...{d}} key={i} />)}
         </div>
     }
 }

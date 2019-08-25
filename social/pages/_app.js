@@ -10,6 +10,8 @@ import { KebabChain } from '../components/wrapper/KebabChain'
 import styled from 'styled-components'
 import { persistStore } from 'redux-persist';
 
+import Web3Wrapper from '../components/wrapper/Web3Wrapper'
+
 const ContainerStyled = styled.div`
 `
 
@@ -44,9 +46,10 @@ class MyApp extends App {
             <Provider store={reduxStore}>
 
               <PersistGate loading={null} persistor={persistor}>
-                <Component {...pageProps} />
+                <Web3Wrapper>
+                  <Component {...pageProps} />
+                </Web3Wrapper>
               </PersistGate>
-
               
             </Provider>
           </ContainerStyled>
