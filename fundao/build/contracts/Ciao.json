@@ -1,0 +1,253 @@
+{
+  "contractName": "Ciao",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "group",
+          "type": "address"
+        }
+      ],
+      "name": "GroupCreated",
+      "type": "event"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"group\",\"type\":\"address\"}],\"name\":\"GroupCreated\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Ciao.sol\":\"Ciao\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Ciao.sol\":{\"keccak256\":\"0xc539253bea2e1c1c5ade0ca79b6c846e334f6c2846f448b76f378b7c1f57f5a1\",\"urls\":[\"bzzr://b6c1d07846861efc1fb9d7f52235b8a87ef7d21b6cf168cea623d277a7e365a4\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a7230582054d44a6a30d2736bccc20ce689b96449078d939b4340af0933c8f89110665f160029",
+  "deployedBytecode": "0x6080604052600080fdfea165627a7a7230582054d44a6a30d2736bccc20ce689b96449078d939b4340af0933c8f89110665f160029",
+  "sourceMap": "0:91:0:-;;;60:29;8:9:-1;5:2;;;30:1;27;20:12;5:2;60:29:0;0:91;;;;;;",
+  "deployedSourceMap": "0:91:0:-;;;;;",
+  "source": "contract Ciao {\n    event GroupCreated(address group);\n\n    constructor() public {\n\n    }\n}",
+  "sourcePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Ciao.sol",
+  "ast": {
+    "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Ciao.sol",
+    "exportedSymbols": {
+      "Ciao": [
+        9
+      ]
+    },
+    "id": 10,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 9,
+        "linearizedBaseContracts": [
+          9
+        ],
+        "name": "Ciao",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 4,
+            "name": "GroupCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2,
+                  "indexed": false,
+                  "name": "group",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4,
+                  "src": "39:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "39:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "38:15:0"
+            },
+            "src": "20:34:0"
+          },
+          {
+            "body": {
+              "id": 7,
+              "nodeType": "Block",
+              "src": "81:8:0",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 8,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "71:2:0"
+            },
+            "returnParameters": {
+              "id": 6,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "81:0:0"
+            },
+            "scope": 9,
+            "src": "60:29:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 10,
+        "src": "0:91:0"
+      }
+    ],
+    "src": "0:91:0"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Ciao.sol",
+    "exportedSymbols": {
+      "Ciao": [
+        9
+      ]
+    },
+    "id": 10,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 9,
+        "linearizedBaseContracts": [
+          9
+        ],
+        "name": "Ciao",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 4,
+            "name": "GroupCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2,
+                  "indexed": false,
+                  "name": "group",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4,
+                  "src": "39:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "39:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "38:15:0"
+            },
+            "src": "20:34:0"
+          },
+          {
+            "body": {
+              "id": 7,
+              "nodeType": "Block",
+              "src": "81:8:0",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 8,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "71:2:0"
+            },
+            "returnParameters": {
+              "id": 6,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "81:0:0"
+            },
+            "scope": 9,
+            "src": "60:29:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 10,
+        "src": "0:91:0"
+      }
+    ],
+    "src": "0:91:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.8+commit.23d335f2.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.10",
+  "updatedAt": "2019-08-25T00:59:54.983Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

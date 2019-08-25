@@ -1,0 +1,13 @@
+{
+  "name": "fundao",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "truffle": "^5.0.33"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.3.0",
+    "zeppelin-solidity": "^1.12.0"
+  }
+}
