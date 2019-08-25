@@ -1,4 +1,4 @@
-import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3 } from "../sagas";
+import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3, SUBMIT_THING, SPACES_LOAD } from "../sagas";
 
 export function loadWeb3() {
     return {
@@ -6,7 +6,7 @@ export function loadWeb3() {
     }
 }
 
-export function connectBox3() {
+export function loadBox3() {
     return {
         type: LOAD_BOX3
     }
@@ -29,6 +29,12 @@ export function createSpace(name, membershipType, addressDetails) {
 
 export function loadSpaces() {
     return {
-        type: LOAD_SPACES
+        type: SPACES_LOAD
+    }
+}
+
+export function submitThing() {
+    return {
+        type: SUBMIT_THING
     }
 }

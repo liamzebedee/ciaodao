@@ -1,5 +1,5 @@
 import ContentLoader from "react-content-loader"
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import { connect } from 'react-redux'
 
 import styled from 'styled-components';
@@ -10,10 +10,12 @@ import { useRouter } from 'next/router'
 import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
-import { createSpace } from '../actions'
+import { createSpace, loadSpaces } from '../actions'
 
 import { format } from "util";
 import { Router } from "next/router";
+
+import { Space } from './atoms/Space'
 
 const MyLoader = () => (
     <ContentLoader 
@@ -34,47 +36,26 @@ const MyLoader = () => (
     </ContentLoader>
 )
 
-
-const SpaceCard = styled.div`
-width: 18rem;
-`
-const Space = ({ name, id }) => {
-    return <SpaceCard className="card">
-      <img className="card-img-top" src={null} alt="Card image cap"/>
-      <div className="card-body">
-        <h5 className="card-title">{name}</h5>
-        {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-        <a href={`/spaces/${id}`} className="btn btn-dark">Open group</a>
-      </div>
-    </SpaceCard>
-}
-
-export class Spaces extends React.Component {
-    render() {
-        const spaces = [
-            {
-                name: "Foobar",
-                id: "0x"
-            },
-        ]
-        return <div>
-            <MyLoader/>
-            {spaces.map((d, i) => <Space {...{d}} key={i} />)}
-        </div>
-    }
-}
+const Spaces = ({loading, data }) => <div>
+  {
+  loading 
+  ? <MyLoader/>
+  : data.map((d, i) => <Space {...d} key={i} />)
+  }
+</div>
 
 
 function mapStateToProps(state, props) {
   return {
-      ...state.data,
-      spaces: state.spaces
+      data: Object.values(state.spaces.data),
+      loading: false
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
       {
+        loadSpaces
       },
       dispatch
   )

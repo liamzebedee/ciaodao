@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects'
+import { call, put, takeLatest, select, fork } from 'redux-saga/effects'
 import Box from '3box';
 import Router from 'next/router'
 import { persistor } from '../pages/_app';
@@ -8,14 +8,23 @@ import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/Spa
 
 let provider
 let signer 
+let myAddress
+
+let mySpace
+let myDid
 
 const MAINNET = 1
 
 let chainId = null
 
+let box
+export { box }
+
 export const LOAD_WEB3 = 'LOAD_WEB3'
 export const LOAD_BOX3 = 'LOAD_BOX3'
 export const WEB3_LOADING = 'WEB3_LOADING'
+export const WEB3_LOADED = 'WEB3_LOADED'
+export const BOX3_LOADED = 'BOX3_LOADED'
 export const LOAD_BOX3_PENDING = 'LOAD_BOX3_PENDING'
 export const LOAD_BOX3_COMPLETE = 'LOAD_BOX3_COMPLETE'
 
@@ -24,6 +33,12 @@ export const VISIT_SPACES = 'VISIT_SPACES'
 export const CREATE_GROUP = 'CREATE_GROUP'
 export const CREATE_GROUP_WEB3_BEGIN = 'CREATE_GROUP_WEB3_BEGIN'
 export const CREATE_GROUP_WEB3_SUCCESS = 'CREATE_GROUP_WEB3_SUCCESS'
+
+export const SPACES_LOAD = 'SPACES_LOAD'
+export const SPACE_LOAD = 'SPACE_LOAD'
+export const SPACE_LOAD_SUCCESS = 'SPACE_LOAD_SUCCESS'
+
+export const SUBMIT_THING = 'SUBMIT_THING'
 
 function getArtifact(name) {
     const artifact = require(`../chain/${name}.json`)
@@ -56,36 +71,30 @@ async function syncBox(box) {
 }
 
 export function* loadWeb3() {
+    yield put({
+        type: WEB3_LOADING
+    })
     const addresses = yield call(window.ethereum.enable)
+    myAddress = addresses[0];
     // provider = new ethers.providers.Web3Provider(window.ethereum);
     provider = new ethers.providers.Web3Provider(web3.currentProvider)
     signer = provider.getSigner(0);
     // let network = yield call(provider.getNetwork)
     // chainId = MAINNET
     // chainId = MAINNET
+    yield put({
+        type: WEB3_LOADED
+    })
 }
 
 export function* loadBox3() {
     yield put({
-        type: WEB3_LOADING
-    })
-    const addresses = yield call(window.ethereum.enable)
-    const myAddress = addresses[0];
-
-    yield put({
         type: LOAD_BOX3_PENDING
     })
+    
     // get my box and profile
-    const box = yield call(Box.openBox, myAddress, window.ethereum, {})
+    box = yield call(Box.openBox, myAddress, window.ethereum, {})
     const myProfile = yield call(Box.getProfile, myAddress)
-
-    // open 3chat space
-    // const chatSpace = await box.openSpace('3chat');
-    // const myDid = chatSpace.DID;
-
-    // // set all to state and continue
-    // const loggedIn = true
-    // this.setState({ chatSpace, box, myProfile, myAddress, myDid, loggedIn });
 
 
     yield put({
@@ -157,13 +166,48 @@ export function* createGroup({ payload }) {
 }
 
 export function* loadSpaces() {
-
+    const spaces = yield select(state => state.spaces.data)
+    
+    // go through all and get updated metadata
+    for(let space in Object.values(spaces)) {
+        yield call(loadSpace, space.addr)
+    }
 }
 
 export function* loadSpace(addr) {
+    // const artifact = getArtifact('Space')
+    // const contract = new ethers.Contract( 
+    //     addr, 
+    //     artifact.abi, 
+    //     signer
+    // )
+
+    
+
+    // open 3chat space
+    mySpace = yield call(() => box.openSpace(addr))
+    myDid = mySpace.DID;
+
+
+    // const thread = yield call(mySpace.joinThread, 'posts')
+
+    const thread = yield call(mySpace.joinThread, 'posts', {})
+
+
+    // const posts = await Box.getThread(spaceName, threadName, firstModerator, membersThread)
+
+    // yield put({
+    //     type: SPACE_LOAD,
+    //     space: addr,
+    //     addresses
+    // })
     // this.props.spaces.list
     // Box.getSpace(address, name, opts)
     
+}
+
+export function* submitThing() {
+
 }
 
 export default function* () {
@@ -171,5 +215,6 @@ export default function* () {
     yield takeLatest(LOAD_BOX3, loadBox3)
     yield takeLatest(VISIT_SPACES, visitSpaces)
     yield takeLatest(CREATE_GROUP, createGroup)
-    yield takeLatest(LOAD_SPACES, loadSpaces)
+    yield takeLatest(SPACES_LOAD, loadSpaces)
+    yield takeLatest(SUBMIT_THING, submitThing)
 }

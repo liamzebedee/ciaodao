@@ -11,9 +11,20 @@ class Web3Wrapper extends Component {
     }
 
     render() {
-        return <>
-            {this.props.children}
-        </>
+        let { loading } = this.props
+        return <div>
+            {loading 
+            ? this.props.children
+            : '...'
+            }
+        </div>
+    }
+}
+
+
+function mapStateToProps(state, props) {
+    return {
+        loading: state.flows.WEB3_LOADING == false
     }
 }
 
@@ -26,4 +37,4 @@ function mapDispatchToProps(dispatch) {
     )
 }
 
-export default connect(null, mapDispatchToProps)(Web3Wrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(Web3Wrapper)

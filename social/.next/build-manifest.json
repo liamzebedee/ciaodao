@@ -12,10 +12,6 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/spaces": [
-      "static/runtime/webpack.js",
-      "static/runtime/main.js"
-    ],
     "/spaces/[addr]": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"

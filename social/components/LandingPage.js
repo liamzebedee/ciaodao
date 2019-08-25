@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components';
 import PageTemplate from "./PageTemplate"
 
-import { connectBox3, visitSpaces } from '../actions'
+import { loadBox3, visitSpaces } from '../actions'
 
 const AppTitle = styled.h1`
     text-transform: lowercase;
@@ -137,7 +137,7 @@ import { bindActionCreators } from "redux";
 
 
 
-function LandingPage({ connectBox3, data, visitSpaces }) {
+function LandingPage({ loadBox3, data, visitSpaces }) {
     const { loadingWeb3, loadingBox3, loggedIn, myAddress } = data
 
     return <PageTemplate>
@@ -152,7 +152,7 @@ function LandingPage({ connectBox3, data, visitSpaces }) {
                     Logged in as <pre>{myAddress}</pre>
                     <button type="button" className="btn btn-success" onClick={visitSpaces}>Visit my spaces</button>
                 </div> 
-                : <button type="button" className={`btn btn-primary`} disabled={loadingBox3 || loadingWeb3} onClick={connectBox3}>Connect with 3Box</button> 
+                : <button type="button" className={`btn btn-primary`} disabled={loadingBox3 || loadingWeb3} onClick={loadBox3}>Connect with 3Box</button> 
             }
             
         </center>
@@ -177,7 +177,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            connectBox3,
+            loadBox3,
             visitSpaces
         },
         dispatch

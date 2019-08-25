@@ -10,7 +10,7 @@ import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace } from '../actions'
-import { Spaces } from "../components/spaces";
+import Spaces from "../components/spaces";
 import { format } from "util";
 import { Router } from "next/router";
 
@@ -43,7 +43,7 @@ function Page({ createSpace, form }) {
     const router = useRouter()
     
 
-    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(true);
+    const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(false);
     const [submitted, setSubmitted] = useState(false)
     const [modalReset, setModalReset] = useState(+new Date)
     const [name, setName] = useState('')
@@ -145,7 +145,7 @@ function Page({ createSpace, form }) {
     }
 
     return <PageTemplate className="container">
-        <h1>My spaces</h1>
+        <h1>Spaces</h1>
         <button className="btn btn-primary" onClick={() => {
             setSubmitted(false)
             setName('')
@@ -169,9 +169,13 @@ function Page({ createSpace, form }) {
             {footer}
 
         </Modal>
-
-
+        
+        <h2>My spaces</h2>
         <Spaces/>
+
+        <h2>Recommended</h2>
+        <Spaces/>
+        
     </PageTemplate>
 }
 
