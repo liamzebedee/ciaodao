@@ -15,7 +15,7 @@ import PostThing from '../atoms/PostThing';
 const Layout = styled.div`
 width: 100%;
 display: flex;
-overflow: hidden;
+
 flex: 1;
 
 
@@ -27,7 +27,7 @@ flex: 1;
 }
 & > .right {
     flex: 0 .2;
-    padding-top: 1em;
+    padding: 1em 0;
     padding-right: 2em;
     
 }
@@ -36,13 +36,6 @@ flex: 1;
     text-align: center;
 }
 
-
- img {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    margin-right: 1em;
-}
 `
 
 
@@ -58,7 +51,7 @@ const Feed = ({ posts }) => {
             <h3 className='title'>Feed</h3>
         </div>
 
-        <div className={`composer`}>
+        <div className={`${css.composer} composer`}>
             <PostThing/>
         </div>
 

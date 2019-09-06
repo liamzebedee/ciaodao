@@ -38,8 +38,18 @@
             }
 
             &.composer {
-                padding: 0rem;
-                
+                padding: 1rem;
+                textarea {
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+                button {
+                    margin-top: .5rem;
+                    // margin-bottom: .5rem;
+                    // margin-right: .5rem;
+                    float: right;
+                }
             }
 
             &.post {
@@ -47,6 +57,9 @@
                 display: flex;
                 align-items: row;
                 
+                &:hover {
+                    background: #eeeeee57;
+                }
 
                 .profile-tile {
                     display: inline-block;
@@ -55,6 +68,8 @@
                 .profile-img {
                     height: 49px;
                     width: 49px;
+                    border-radius: 50%;
+                    margin-right: 1em;
                 }
 
                 .profile-name {
@@ -72,6 +87,9 @@
 
 .feedCtn {
     
+}
+
+.composer {
 }
 
 .feed-body {

@@ -35,6 +35,7 @@ const ProfileTile = ({ profile, address, did }) => {
       <div className="profileTile_info">
         <a href={`https://3box.io/${address}`} className="profileTile_info_link" target="_blank" rel="noopener noreferrer">
           <img
+            style={{ width: 49, height: 49 }}
             src={image}
             className="profile-img"
             alt="profile"

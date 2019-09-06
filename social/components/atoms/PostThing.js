@@ -21,7 +21,7 @@ const PostThing = ({ submitThing }) => {
             <Button onClick={async () => {
                 setSubmitted(true)
                 submitThing(text)
-            }} disabled={submitted}>Submit</Button>
+            }} disabled={submitted}>👋 ciao</Button>
         </PostThingForm>
     </div>
 }
