@@ -181,6 +181,8 @@ export function* loadSpaces() {
 
 
 
+export function loadProfile() {
+}
 
 
 export default function* () {
