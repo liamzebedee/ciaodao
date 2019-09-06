@@ -131,7 +131,7 @@ const AddAnEntryCTA = styled.div`
 
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
-import LoggedInUser from "./atoms/LoggedInUser";
+import LoggedInUser from "../atoms/LoggedInUser";
 
 
 

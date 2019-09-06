@@ -1,4 +1,4 @@
-import LandingPage from '../components/LandingPage'
+import LandingPage from '../components/pages/LandingPage'
 import { connect } from 'react-redux'
 import React, { Component } from 'react';
 

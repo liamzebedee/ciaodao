@@ -15,6 +15,7 @@ const Layout = styled.div`
 width: 100%;
 display: flex;
 overflow: hidden;
+flex: 1;
 
 
 .left {
@@ -43,16 +44,6 @@ overflow: hidden;
 }
 `
 
-const SpacePage = styled.div`
-padding-top: 3em;
-padding-left: 2em;
-
-header {
-    padding-bottom: 2em;
-    margin-top: -1em;
-}
-`
-
 
 
 
@@ -65,24 +56,28 @@ const Menu = () => {
 
 const Feed = ({ posts }) => {
     return <div className={css.feed}>
-    
-        {/* <PostThing key={postThingKey} submitThing={async (message) => {
-            try { 
-                await thread.post(message) 
-                this.setState({ postThingKey: postThingKey + 1 })
-            }
-            catch(ex) {
-                console.error(ex)
-            }
-        }}/> */}
-        
-        <br/>
-        <br/>
 
-        { posts
-        ? posts.map(post => <Post {...post} profile={this.props.profiles[post.author]}/>)
-        : null }
-    
+        <div className={css.feedCtn}>
+            {/* <PostThing key={postThingKey} submitThing={async (message) => {
+                try { 
+                    await thread.post(message) 
+                    this.setState({ postThingKey: postThingKey + 1 })
+                }
+                catch(ex) {
+                    console.error(ex)
+                }
+            }}/> */}
+            
+            <br/>
+            <br/>
+    {/* this.props.profiles[post.author] */}
+            {/* { posts
+            ? posts.map(post => <Post {...post} {...{
+                address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
+            }}/>)
+            : null } */}
+            <footer></footer>
+        </div>
     </div>
 }
 
@@ -157,9 +152,7 @@ class Page extends Component {
         let content
         switch(view) {
             case views.home:
-                content = <div>
-                    <Feed {...{ posts }}/>
-                </div>
+                content = <Feed {...{ posts }}/>
                 break
             case views.members:
                 break;
@@ -170,9 +163,9 @@ class Page extends Component {
                 break;
         }
 
-        return <PageTemplate className="container">
-            <SpacePage>
-
+        return <PageTemplate>
+            <div className={css.page}>
+            
             <header>
                 <a href="/spaces">{`<<`} Back to spaces</a>
             </header>
@@ -203,7 +196,7 @@ class Page extends Component {
                 </div>
             
             </Layout>
-            </SpacePage>
+            </div>
             
         </PageTemplate>
     }
@@ -211,7 +204,7 @@ class Page extends Component {
 
 const Post = ({ timestamp, message, postId, author, profile }) => {
     return <div key={postId} className="media">
-        <ProfileTile profile={profile} did={author}/>
+        {/* <ProfileTile profile={profile} did={author}/> */}
 
         <div className="media-body">
             <h5 className="mt-0">{(profile && profile.name) || author}</h5>
