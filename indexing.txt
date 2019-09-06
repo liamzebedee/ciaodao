@@ -1,0 +1,73 @@
+0xBAc675C310721717Cd4A37F6cbeA1F081b1C2a07
+
+
+
+
+with token_balances as (
+  with double_entry_book as (
+      -- debits
+      select token_address, to_address as address, safe_cast(value as FLOAT64) as value
+      from `bigquery-public-data.ethereum_blockchain.token_transfers`
+      where to_address is not null
+      --and DATE(block_timestamp) = "2019-08-18"
+      union all
+      -- credits
+      select token_address, from_address as address, -(safe_cast(value as FLOAT64)) as value
+      from `bigquery-public-data.ethereum_blockchain.token_transfers`
+      where to_address is not null
+      --and DATE(block_timestamp) = "2019-08-18"
+  )
+  select token_address, address, sum(value) as balance
+  from double_entry_book
+  group by token_address, address
+  --order by balance desc
+  --limit 10000
+)
+
+select * from token_balances
+where address = LOWER('0xca65Fd88c2d0b4A012F38c6677f45bbc4186AcF5')
+
+
+
+
+
+user {
+    daos,
+    friends
+}
+
+
+
+
+https://sourcegraph.com/github.com/blockchain-etl/ethereum-etl/-/blob/README.md#L217:16
+
+friend = 
+    order by nDaos, balance desc
+
+
+    const chatSpace = await box.openSpace('3chat');
+    const myDid = chatSpace.DID;
+
+
+chatSpace
+
+
+
+topicManager.getOwner(topic, (err, owner) => {
+      topicManager.getMembers(topic, async (err, members) => {
+        const thread = await chatSpace.joinThread(topic, { firstModerator: owner, members });
+        openTopics[topic] = thread;
+        this.setState({ activeTopic: openTopics[topic] });
+
+        thread.onUpdate(() => this.updateThreadPosts());
+        thread.onNewCapabilities(() => this.updateThreadCapabilities());
+
+        this.updateThreadPosts();
+        this.updateThreadCapabilities();
+      })
+    })
+
+
+
+    let threadData = [];
+    const posts = await activeTopic.getPosts();

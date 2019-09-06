@@ -1,4 +1,4 @@
-import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3, SUBMIT_THING, SPACES_LOAD } from "../sagas";
+import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3, SUBMIT_THING, SPACES_LOAD, SPACE_LOAD } from "../sagas";
 
 export function loadWeb3() {
     return {
@@ -33,8 +33,27 @@ export function loadSpaces() {
     }
 }
 
+export function loadSpace(addr) {
+    return {
+        type: SPACE_LOAD,
+        payload: {
+            addr,
+        }
+    }
+}
+
 export function submitThing() {
     return {
         type: SUBMIT_THING
+    }
+}
+
+export function addUserProfile(user, profile) {
+    return {
+        type: 'ADD_USER_PROFILE',
+        payload: {
+            user,
+            profile
+        }
     }
 }

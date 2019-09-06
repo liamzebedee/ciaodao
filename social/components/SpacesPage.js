@@ -14,6 +14,8 @@ import Spaces from "../components/spaces";
 import { format } from "util";
 import { Router } from "next/router";
 
+import LoggedInUser from './atoms/LoggedInUser'
+
 
 export const MEMBERSHIP_TYPE_TOKEN = 'token'
 export const MEMBERSHIP_TYPE_INVITE = 'invite'
@@ -22,6 +24,16 @@ const PreTextarea = styled.div`
     textarea {
         font-family: monospace;
     }
+`
+
+const Layout = styled.div`
+padding-top: 3em;
+padding-left: 2em;
+
+header {
+    display: flex;
+    justify-content: left;
+}
 `
 
 const addresses = [
@@ -145,37 +157,42 @@ function Page({ createSpace, form }) {
     }
 
     return <PageTemplate className="container">
-        <h1>Spaces</h1>
-        <button className="btn btn-primary" onClick={() => {
-            setSubmitted(false)
-            setName('')
-            setMembershipType('')
-            setAddressDetails([])
-            setShowCreateSpaceModal(true)
-        }}>Create space</button>
+        <Layout>
+            <header>
+                <LoggedInUser/>
+            </header>
 
-        <Modal 
-        show={showCreateSpaceModal} 
-        onHide={() => {
-            setShowCreateSpaceModal(false)
-            setModalReset(+new Date)
-        }}>
-            <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {body}
-            </Modal.Body>
-            {footer}
+            <h1>Spaces</h1>
+            <button className="btn btn-primary" onClick={() => {
+                setSubmitted(false)
+                setName('')
+                setMembershipType('')
+                setAddressDetails([])
+                setShowCreateSpaceModal(true)
+            }}>Create space</button>
 
-        </Modal>
-        
-        <h2>My spaces</h2>
-        <Spaces/>
+            <Modal 
+            show={showCreateSpaceModal} 
+            onHide={() => {
+                setShowCreateSpaceModal(false)
+                setModalReset(+new Date)
+            }}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {body}
+                </Modal.Body>
+                {footer}
 
-        <h2>Recommended</h2>
-        <Spaces/>
-        
+            </Modal>
+            <br/>
+            <br/>
+            <br/>
+            
+            <h2>My spaces</h2>
+            <Spaces/>
+        </Layout>
     </PageTemplate>
 }
 

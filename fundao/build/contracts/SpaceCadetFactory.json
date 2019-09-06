@@ -6338,10 +6338,16 @@
       "links": {},
       "address": "0x3Fc956BD7A2A861B23C816fa683a767DB4c58585",
       "transactionHash": "0xacf026a123cf147200e1931522a2999a4431dabd94651ba3a76264dd95fed159"
+    },
+    "1567273960081": {
+      "events": {},
+      "links": {},
+      "address": "0x4a2D36463A99348746a2E01209924c9Fc93257c9",
+      "transactionHash": "0x3a15b097e91ef5a5c54c229371af16d21ad20bae995d09119e6a8a56738b3d43"
     }
   },
   "schemaVersion": "3.0.10",
-  "updatedAt": "2019-08-25T01:46:16.023Z",
+  "updatedAt": "2019-08-31T18:14:43.184Z",
   "devdoc": {
     "methods": {}
   },

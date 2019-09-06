@@ -9,7 +9,6 @@ Social spaces where only tokenholders can post.
 
 Built at #ETHBerlinZwei.
 
-
 #### Structure
 contracts - fundao/
 dapp - frontend/

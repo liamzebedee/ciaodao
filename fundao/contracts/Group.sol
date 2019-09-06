@@ -19,8 +19,6 @@ contract ERC721SpaceCadet is ERC721Full {
     }
 }
 
-
-
 contract ERC20MembershipResolver is IMembershipResolver {
     IERC20 erc20;
     

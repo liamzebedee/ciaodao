@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "did-resolver": "^1.0.0",
+    "ethereum-blockies-base64": "^1.0.2"
+  }
+}

@@ -8,7 +8,11 @@ import { bindActionCreators } from "redux";
 const PostThingForm = styled.div`
     background: #eee;
     padding: 1em;
+    & > * {
+        margin: 0.5em;
+    }
 `
+
 
 const PostThing = ({ submitThing }) => {
     const [text, setText] = useState('')
@@ -20,7 +24,7 @@ const PostThing = ({ submitThing }) => {
             
             <Button onClick={async () => {
                 setSubmitted(true)
-                submitThing()
+                submitThing(text)
             }} disabled={submitted}>Submit</Button>
         </PostThingForm>
     </div>

@@ -9,6 +9,8 @@
         "3box": "^1.10.7",
         "@portis/web3": "^2.0.0-beta.38",
         "@zeit/next-css": "^1.0.1",
+        "@zeit/next-less": "^1.0.1",
+        "apollo-boost": "^0.4.4",
         "bootstrap": "^4.3.1",
         "connected-next-router": "^0.0.7",
         "connected-react-router": "^6.5.2",
@@ -16,11 +18,13 @@
         "ethers": "^4.0.36",
         "history": "^4.9.0",
         "jquery": "^3.4.1",
+        "less": "^3.10.3",
         "luxon": "^1.17.1",
         "moment": "^2.24.0",
         "next": "9.0.1",
         "normalize.css": "^8.0.1",
         "react": "^16.8.6",
+        "react-apollo": "^3.0.1",
         "react-bootstrap": "^1.0.0-beta.12",
         "react-content-loader": "^4.2.2",
         "react-dom": "^16.8.6",
@@ -33,7 +37,8 @@
         "redux-saga": "^1.0.5",
         "redux-thunk": "^2.3.0",
         "styled-components": "^5.0.0-beta.5",
-        "web3": "^1.2.1"
+        "web3": "^1.2.1",
+        "webpack": "^4.39.3"
     },
     "devDependencies": {
         "babel-plugin-styled-components": "^1.10.2"

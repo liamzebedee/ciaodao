@@ -7,7 +7,7 @@ import PageTemplate from "./PageTemplate"
 import { useRouter } from 'next/router'
 
 
-import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
+import { Modal, Button, Form, ButtonGroup, CardColumns } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace, loadSpaces } from '../actions'
@@ -40,7 +40,16 @@ const Spaces = ({loading, data }) => <div>
   {
   loading 
   ? <MyLoader/>
-  : data.map((d, i) => <Space {...d} key={i} />)
+  : <div>
+    <CardColumns>
+    { 
+      data.map((d, i) => <Space {...d} key={i} />)
+    }
+    { 
+      data.map((d, i) => <Space {...d} key={i} />)
+    }
+    </CardColumns>
+  </div>
   }
 </div>
 

@@ -1,17 +1,18 @@
-import { call, put, takeLatest, select, fork } from 'redux-saga/effects'
+import { call, put, takeLatest, select, fork, cancelled, take } from 'redux-saga/effects'
+import { eventChannel, END } from 'redux-saga'
 import Box from '3box';
 import Router from 'next/router'
 import { persistor } from '../pages/_app';
 import Web3 from 'web3';
 import { ethers, ContractFactory } from 'ethers';
 import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/SpacesPage';
+import { submitThing } from '../actions';
 
 let provider
 let signer 
 let myAddress
 
-let mySpace
-let myDid
+let mySpace 
 
 const MAINNET = 1
 
@@ -38,7 +39,12 @@ export const SPACES_LOAD = 'SPACES_LOAD'
 export const SPACE_LOAD = 'SPACE_LOAD'
 export const SPACE_LOAD_SUCCESS = 'SPACE_LOAD_SUCCESS'
 
+export const SPACE_LOAD_POSTS = 'SPACE_LOAD_POSTS'
+export const SPACE_LOAD_POSTS_SUCCESS = 'SPACE_LOAD_POSTS_SUCCESS'
+
 export const SUBMIT_THING = 'SUBMIT_THING'
+
+
 
 function getArtifact(name) {
     const artifact = require(`../chain/${name}.json`)
@@ -48,7 +54,7 @@ function getArtifact(name) {
 async function getDeployment(artifact) {
     let networks = artifact.networks
     let keys = Object.keys(artifact.networks)
-    keys = keys.sort()
+    keys = keys.sort().reverse()
     if(keys.length === 0) throw new Error("no deployments")
 
     let deploy
@@ -95,7 +101,7 @@ export function* loadBox3() {
     // get my box and profile
     box = yield call(Box.openBox, myAddress, window.ethereum, {})
     const myProfile = yield call(Box.getProfile, myAddress)
-
+    const myDid = box.DID
 
     yield put({
         type: LOAD_BOX3_COMPLETE,
@@ -103,12 +109,11 @@ export function* loadBox3() {
             // box,
             myProfile,
             myAddress,
+            myDid,
             loggedIn: true
             // box, myProfile, myAddress
         }
     })
-
-
 
     yield call(persistor.flush)
 }
@@ -174,41 +179,9 @@ export function* loadSpaces() {
     }
 }
 
-export function* loadSpace(addr) {
-    // const artifact = getArtifact('Space')
-    // const contract = new ethers.Contract( 
-    //     addr, 
-    //     artifact.abi, 
-    //     signer
-    // )
-
-    
-
-    // open 3chat space
-    mySpace = yield call(() => box.openSpace(addr))
-    myDid = mySpace.DID;
 
 
-    // const thread = yield call(mySpace.joinThread, 'posts')
 
-    const thread = yield call(mySpace.joinThread, 'posts', {})
-
-
-    // const posts = await Box.getThread(spaceName, threadName, firstModerator, membersThread)
-
-    // yield put({
-    //     type: SPACE_LOAD,
-    //     space: addr,
-    //     addresses
-    // })
-    // this.props.spaces.list
-    // Box.getSpace(address, name, opts)
-    
-}
-
-export function* submitThing() {
-
-}
 
 export default function* () {
     yield takeLatest(LOAD_WEB3, loadWeb3)

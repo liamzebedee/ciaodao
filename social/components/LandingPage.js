@@ -131,6 +131,7 @@ const AddAnEntryCTA = styled.div`
 
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
+import LoggedInUser from "./atoms/LoggedInUser";
 
 
 
@@ -142,17 +143,17 @@ function LandingPage({ loadBox3, data, visitSpaces }) {
 
     return <PageTemplate>
         <HeroBlock>
-            <Hero>dirty DAO.</Hero>
+            <Hero>ciao dao.</Hero>
         </HeroBlock>
 
         <center>
             { 
                 loggedIn 
                 ? <div>
-                    Logged in as <pre>{myAddress}</pre>
+                    Logged in as <LoggedInUser/>
                     <button type="button" className="btn btn-success" onClick={visitSpaces}>Visit my spaces</button>
                 </div> 
-                : <button type="button" className={`btn btn-primary`} disabled={loadingBox3 || loadingWeb3} onClick={loadBox3}>Connect with 3Box</button> 
+                : <button type="button" className={`btn btn-primary`} disabled={loadingBox3} onClick={loadBox3}>Connect with 3Box</button> 
             }
             
         </center>
