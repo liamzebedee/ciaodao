@@ -6,7 +6,7 @@ import PageTemplate from "./PageTemplate"
 import { useRouter } from 'next/router'
 
 
-import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
+import { Modal, Button, Form, ButtonGroup, FormControl } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace } from '../../actions'
@@ -27,8 +27,8 @@ const PreTextarea = styled.div`
 `
 
 const Layout = styled.div`
-padding-top: 3em;
-padding-left: 2em;
+padding-top: 3rem;
+padding-left: 2rem;
 
 header {
     display: flex;
@@ -56,6 +56,8 @@ function Page({ createSpace, form }) {
     
 
     const [showCreateSpaceModal, setShowCreateSpaceModal] = useState(false);
+    const [showSearchSpacesModal, setShowSearchSpacesModal] = useState(false);
+
     const [submitted, setSubmitted] = useState(false)
     const [modalReset, setModalReset] = useState(+new Date)
     const [name, setName] = useState('')
@@ -163,20 +165,27 @@ function Page({ createSpace, form }) {
             </header>
 
             <h1>Spaces</h1>
-            <button className="btn btn-primary" onClick={() => {
-                setSubmitted(false)
-                setName('')
-                setMembershipType('')
-                setAddressDetails([])
-                setShowCreateSpaceModal(true)
-            }}>Create space</button>
+            <div>
+                <button className="btn btn-primary" onClick={() => {
+                    setSubmitted(false)
+                    setName('')
+                    setMembershipType('')
+                    setAddressDetails([])
+                    setShowCreateSpaceModal(true)
+                }}>Create space</button> 
+                
+                <button className="btn btn-secondary" onClick={() => {
+                    setShowSearchSpacesModal(true)
+                }}>Find spaces</button>
+            </div>
+            
 
             <Modal 
-            show={showCreateSpaceModal} 
-            onHide={() => {
-                setShowCreateSpaceModal(false)
-                setModalReset(+new Date)
-            }}>
+                show={showCreateSpaceModal} 
+                onHide={() => {
+                    setShowCreateSpaceModal(false)
+                    setModalReset(+new Date)
+                }}>
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
@@ -184,16 +193,43 @@ function Page({ createSpace, form }) {
                     {body}
                 </Modal.Body>
                 {footer}
-
             </Modal>
-            <br/>
-            <br/>
+
+            <SearchSpacesModal
+                shown={showSearchSpacesModal}
+                onHide={() => {
+                    setShowSearchSpacesModal(false)
+                    setModalReset(+new Date)
+                }}/>
+
             <br/>
             
             <h2>My spaces</h2>
             <Spaces/>
         </Layout>
     </PageTemplate>
+}
+
+const SearchSpacesModal = ({ shown, onHide }) => {
+    let [searching, setSearching] = useState(false)
+    function searchForSpaces() {}
+
+    return <Modal 
+        show={shown} 
+        onHide={onHide}
+        width={800}
+        >
+        <Modal.Header closeButton>
+            <Modal.Title>Find spaces</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Form.Control type="text" placeholder="e.g. 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI)" />
+            <Button variant="primary" disabled={searching} onClick={searchForSpaces}>
+                <i className="fas fa-search"></i> Search
+            </Button>
+
+        </Modal.Body>
+    </Modal>
 }
 
 function mapStateToProps(state, props) {

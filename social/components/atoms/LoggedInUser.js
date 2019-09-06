@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { ProfileTile } from './ProfileTile';
 
 const Style = styled.div`
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
 
@@ -18,7 +18,7 @@ const Style = styled.div`
         height: 60px;
         width: 60px;
         border-radius: 50%;
-        margin-right: 1em;
+        margin-right: 1rem;
     }
 `
 

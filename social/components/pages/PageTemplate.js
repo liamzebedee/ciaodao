@@ -10,8 +10,8 @@ const AppTitle = styled.h1`
     color: #333;
     align-self: center;
     flex: 1;
-    padding-right: 1em;
-    padding-left: 1em;
+    padding-right: 1rem;
+    padding-left: 1rem;
     font-size: 16px;
 
     :hover {
@@ -19,7 +19,7 @@ const AppTitle = styled.h1`
     }
 `
 const HeaderBar = styled.div`
-    padding: 2em;
+    padding: 2rem;
     background: #eee;
     display: flex;
     flex-direction: row;
