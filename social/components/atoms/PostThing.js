@@ -6,11 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 
 const PostThingForm = styled.div`
-    background: #eee;
-    padding: 1em;
-    & > * {
-        margin: 0.5em;
-    }
+    
 `
 
 

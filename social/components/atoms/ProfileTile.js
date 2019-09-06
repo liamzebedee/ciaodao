@@ -14,34 +14,31 @@ async function getEthAddress(did) {
 
 
 const ProfileTile = ({ profile, address, did }) => {
-  let [address2, setAddress] = useState(address)
+  // let [address2, setAddress] = useState(address)
 
-  if(!address) {
-    useEffect(() => {
-      (async function () {
-        setAddress(await getEthAddress(did))
-      })()
-    }, [did])
-  }
+  // if(!address) {
+  //   useEffect(() => {
+  //     (async function () {
+  //       setAddress(await getEthAddress(did))
+  //     })()
+  //   }, [did])
+  // }
   
   let image
   if(profile && profile.image) {
     image = `https://ipfs.infura.io/ipfs/${profile.image[0].contentUrl['/']}`
   } else {
-    image = makeBlockie(address2);
+    image = makeBlockie('did:muport:QmYqSGLGX9aV52MiGx7ofejMvKh3qsJ2ySrWCuw2XikJkA')
   }
 
-  return  <div className="profileTile">
+  return  <div className="profile-tile">
       <div className="profileTile_info">
-        <a href={`https://3box.io/${address2}`} className="profileTile_info_link" target="_blank" rel="noopener noreferrer">
-          {image ? (
-            <img
-              src={image}
-              className="profileTile_info_image profileTile_info_image-transparent"
-              alt="profile"
-            />
-          ) : <div className="profileTile_info_image" />}
-  
+        <a href={`https://3box.io/${address}`} className="profileTile_info_link" target="_blank" rel="noopener noreferrer">
+          <img
+            src={image}
+            className="profile-img"
+            alt="profile"
+          />
         </a>
       </div>
   

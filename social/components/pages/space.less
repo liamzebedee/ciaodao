@@ -1,12 +1,12 @@
 .page {
-    padding-top: 3em;
-    padding-left: 2em;
+    padding-top: 3rem;
+    padding-left: 2rem;
     display: flex;
     flex: 1;
     flex-direction: column;
 
     header {
-        padding-bottom: 2em;
+        padding-bottom: 2rem;
     }
 }
 
@@ -25,7 +25,49 @@
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
 
+    & > div {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(0,0,0,.125);
 
+        // Specific types of rows
+        &:global {
+            &.heading {
+                .title, h3 {
+                    margin-bottom: 0;
+                }
+            }
+
+            &.composer {
+                padding: 0rem;
+                
+            }
+
+            &.post {
+                font-size: 15px;
+                display: flex;
+                align-items: row;
+                
+
+                .profile-tile {
+                    display: inline-block;
+                }
+
+                .profile-img {
+                    height: 49px;
+                    width: 49px;
+                }
+
+                .profile-name {
+                    font-size: 15px;
+                    font-weight: 700;
+                    padding-bottom: 1rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
 }
 
 .feedCtn {

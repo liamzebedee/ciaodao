@@ -9,6 +9,7 @@ import { box } from "../../sagas";
 import { ProfileTile } from "../atoms/ProfileTile";
 import PageTemplate from "./PageTemplate";
 import css from "./space.less";
+import PostThing from '../atoms/PostThing';
 
 
 const Layout = styled.div`
@@ -18,13 +19,13 @@ overflow: hidden;
 flex: 1;
 
 
-.left {
+& > .left {
     flex: .8;
     padding-top: 1em;
     
     max-width: 40em;
 }
-.right {
+& > .right {
     flex: 0 .2;
     padding-top: 1em;
     padding-right: 2em;
@@ -50,33 +51,46 @@ flex: 1;
 const TEMPORARY_MODERATOR = '0x1cdad033df958291390ba7265be81b84cb6bfcfb'
 
 
-const Menu = () => {
-    
-}
 
 const Feed = ({ posts }) => {
     return <div className={css.feed}>
+        <div className={`heading`}>
+            <h3 className='title'>Feed</h3>
+        </div>
 
-        <div className={css.feedCtn}>
-            {/* <PostThing key={postThingKey} submitThing={async (message) => {
-                try { 
-                    await thread.post(message) 
-                    this.setState({ postThingKey: postThingKey + 1 })
-                }
-                catch(ex) {
-                    console.error(ex)
-                }
-            }}/> */}
+        <div className={`composer`}>
+            <PostThing/>
+        </div>
+
+        {/* <PostThing key={postThingKey} submitThing={async (message) => {
+            try { 
+                await thread.post(message) 
+                this.setState({ postThingKey: postThingKey + 1 })
+            }
+            catch(ex) {
+                console.error(ex)
+            }
+        }}/> */}
             
-            <br/>
-            <br/>
-    {/* this.props.profiles[post.author] */}
-            {/* { posts
-            ? posts.map(post => <Post {...post} {...{
-                address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
-            }}/>)
-            : null } */}
-            <footer></footer>
+        { posts
+        ? posts.map(post => <Post {...post} {...{
+            address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
+        }}/>)
+        : null }
+
+        <footer></footer>
+    </div>
+}
+
+const Post = ({ timestamp, message, postId, author, address, profile }) => {
+    return <div className='post' key={postId}>
+        <div className='left'>
+            <ProfileTile did={author}/>
+        </div>
+
+        <div className='right'>
+            <span className="profile-name mt-0">{address || (profile && profile.name) || author}</span>
+            <div>{message}</div>
         </div>
     </div>
 }
@@ -200,17 +214,6 @@ class Page extends Component {
             
         </PageTemplate>
     }
-}
-
-const Post = ({ timestamp, message, postId, author, profile }) => {
-    return <div key={postId} className="media">
-        {/* <ProfileTile profile={profile} did={author}/> */}
-
-        <div className="media-body">
-            <h5 className="mt-0">{(profile && profile.name) || author}</h5>
-            {message}
-        </div>
-    </div>
 }
 
 
