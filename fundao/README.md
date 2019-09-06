@@ -22,5 +22,14 @@ This design is pretty powerful, as you can be really flexible with membership. F
    - The token contract can have a custom "ban" function, which tallies votes on banning a member from tokenholders. If it passes a threshold, the member's balance is erased.
  - since the membership resolver uses balance, this means the member will no longer be shown in the space
 
+#### Humans-only members
+Another thing we can do is leverage [HumanityDAO](https://www.humanitydao.org) to only allow humans into the space. Keep in mind that the membership resolver is simply a function, so we can make spaces for specific tokens, that also require humanity (in the narrow sense of the word):
+
+```sol
+function isMember(address x) external returns (bool) {
+  return HumanityRegistry.isHuman(x) && token.balanceOf(x) > 0;
+}
+```
+
 #### Inviting with Merkle Airdrops
 The membership function also doesn't dictate how you distribute tokens. It is thus possible to invite a large number of members using something like a Merkle Airdrop.
