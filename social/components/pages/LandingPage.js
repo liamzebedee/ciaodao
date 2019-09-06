@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components';
 import PageTemplate from "./PageTemplate"
 
-import { loadBox3, visitSpaces } from '../actions'
+import { loadBox3, visitSpaces } from '../../actions'
 
 const AppTitle = styled.h1`
     text-transform: lowercase;

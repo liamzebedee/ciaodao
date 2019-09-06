@@ -1,24 +1,14 @@
-import React, { useState, Component } from "react";
-import { connect } from 'react-redux'
-
-import styled from 'styled-components';
-import PageTemplate from "./PageTemplate"
-import { useRouter } from 'next/router'
-
-import { Modal, Button, Form, ButtonGroup, Card, ListGroup } from 'react-bootstrap'
-import Link from 'next/link'
-import { bindActionCreators } from "redux";
-import { loadSpace, addUserProfile } from '../actions'
-import Spaces from "../components/spaces";
-import { format } from "util";
-import { Router } from "next/router";
-import PostThing from "./atoms/PostThing";
-import Box3Wrapper from "./wrapper/Box3Wrapper";
-import { box } from "../sagas";
-import { ProfileTile, ProfilePicture } from "./atoms/ProfileTile";
-import makeBlockie from "ethereum-blockies-base64";
-
 import Box from '3box';
+import React, { Component } from "react";
+import { Card, ListGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import styled from 'styled-components';
+import { addUserProfile, loadSpace } from '../../actions';
+import { box } from "../../sagas";
+import { ProfileTile } from "../atoms/ProfileTile";
+import PageTemplate from "./PageTemplate";
+import css from "./space.less";
 
 
 const Layout = styled.div`
@@ -64,11 +54,36 @@ header {
 `
 
 
+
+
 const TEMPORARY_MODERATOR = '0x1cdad033df958291390ba7265be81b84cb6bfcfb'
 
 
 const Menu = () => {
     
+}
+
+const Feed = ({ posts }) => {
+    return <div className={css.feed}>
+    
+        {/* <PostThing key={postThingKey} submitThing={async (message) => {
+            try { 
+                await thread.post(message) 
+                this.setState({ postThingKey: postThingKey + 1 })
+            }
+            catch(ex) {
+                console.error(ex)
+            }
+        }}/> */}
+        
+        <br/>
+        <br/>
+
+        { posts
+        ? posts.map(post => <Post {...post} profile={this.props.profiles[post.author]}/>)
+        : null }
+    
+    </div>
 }
 
 class Page extends Component {
@@ -143,22 +158,7 @@ class Page extends Component {
         switch(view) {
             case views.home:
                 content = <div>
-                    <PostThing key={postThingKey} submitThing={async (message) => {
-                        try { 
-                            await thread.post(message) 
-                            this.setState({ postThingKey: postThingKey + 1 })
-                        }
-                        catch(ex) {
-                            console.error(ex)
-                        }
-                    }}/>
-                    
-                    <br/>
-                    <br/>
-
-                    { posts
-                    ? posts.map(post => <Post {...post} profile={this.props.profiles[post.author]}/>)
-                    : null }
+                    <Feed {...{ posts }}/>
                 </div>
                 break
             case views.members:

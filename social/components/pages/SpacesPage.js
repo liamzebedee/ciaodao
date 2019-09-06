@@ -9,12 +9,12 @@ import { useRouter } from 'next/router'
 import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
-import { createSpace } from '../actions'
-import Spaces from "../components/spaces";
+import { createSpace } from '../../actions'
+import Spaces from "../containers/spaces";
 import { format } from "util";
 import { Router } from "next/router";
 
-import LoggedInUser from './atoms/LoggedInUser'
+import LoggedInUser from '../atoms/LoggedInUser'
 
 
 export const MEMBERSHIP_TYPE_TOKEN = 'token'

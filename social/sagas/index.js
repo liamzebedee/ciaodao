@@ -5,7 +5,7 @@ import Router from 'next/router'
 import { persistor } from '../pages/_app';
 import Web3 from 'web3';
 import { ethers, ContractFactory } from 'ethers';
-import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/SpacesPage';
+import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/pages/SpacesPage';
 import { submitThing } from '../actions';
 
 let provider

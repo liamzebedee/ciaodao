@@ -14,7 +14,7 @@ import { format } from "util";
 import { Router } from "next/router";
 
 
-export const Space = ({ name, addr }) => {
+export const SpaceCard = ({ name, addr }) => {
     return <Card style={{ width: '300px' }}>
       <div className="card-body">
         <h5 className="card-title">{name}</h5>

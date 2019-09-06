@@ -3,19 +3,18 @@ import React, { Component, useState } from "react";
 import { connect } from 'react-redux'
 
 import styled from 'styled-components';
-import PageTemplate from "./PageTemplate"
 import { useRouter } from 'next/router'
 
 
 import { Modal, Button, Form, ButtonGroup, CardColumns } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
-import { createSpace, loadSpaces } from '../actions'
+import { createSpace, loadSpaces } from '../../actions'
 
 import { format } from "util";
 import { Router } from "next/router";
 
-import { Space } from './atoms/Space'
+import { SpaceCard } from '../atoms/SpaceCard'
 
 const MyLoader = () => (
     <ContentLoader 
@@ -43,10 +42,10 @@ const Spaces = ({loading, data }) => <div>
   : <div>
     <CardColumns>
     { 
-      data.map((d, i) => <Space {...d} key={i} />)
+      data.map((d, i) => <SpaceCard {...d} key={i} />)
     }
     { 
-      data.map((d, i) => <Space {...d} key={i} />)
+      data.map((d, i) => <SpaceCard {...d} key={i} />)
     }
     </CardColumns>
   </div>

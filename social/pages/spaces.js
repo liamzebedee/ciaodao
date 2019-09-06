@@ -1,4 +1,4 @@
-import SpacesPage from '../components/SpacesPage'
+import SpacesPage from '../components/pages/SpacesPage'
 
 const Spaces = () => {
     return <>
