@@ -1,5 +1,5 @@
 import Box from '3box';
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Card, ListGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -10,6 +10,7 @@ import { ProfileTile } from "../atoms/ProfileTile";
 import PageTemplate from "./PageTemplate";
 import css from "./space.less";
 import PostThing from '../atoms/PostThing';
+import { filterPosts } from '../../selectors';
 
 
 const Layout = styled.div`
@@ -39,34 +40,29 @@ flex: 1;
 `
 
 
+const TEMPORARY_MODERATOR = 'did:muport:QmRTNPefmFga68GnzYPzQR3ZsYYNdQoTVgKCpuBjZQrRTZ'
 
-
-const TEMPORARY_MODERATOR = '0x1cdad033df958291390ba7265be81b84cb6bfcfb'
-
-
-
-const Feed = ({ posts }) => {
+const Feed = ({ thread, posts }) => {
+    const [postThingKey, setPostThingKey] = useState(0)
     return <div className={css.feed}>
         <div className={`heading`}>
             <h3 className='title'>Feed</h3>
         </div>
 
         <div className={`${css.composer} composer`}>
-            <PostThing/>
+            <PostThing key={postThingKey} submitThing={async (message) => {
+                try { 
+                    await thread.post(message) 
+                    setPostThingKey(postThingKey+1)
+                }
+                catch(ex) {
+                    console.error(ex)
+                }
+            }}/>
         </div>
-
-        {/* <PostThing key={postThingKey} submitThing={async (message) => {
-            try { 
-                await thread.post(message) 
-                this.setState({ postThingKey: postThingKey + 1 })
-            }
-            catch(ex) {
-                console.error(ex)
-            }
-        }}/> */}
             
         { posts
-        ? posts.map(post => <Post {...post} {...{
+        ? filterPosts(posts).map(post => <Post {...post} {...{
             address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
         }}/>)
         : null }
@@ -75,7 +71,10 @@ const Feed = ({ posts }) => {
     </div>
 }
 
+import spotifyStyleTime from 'spotify-style-times'
+
 const Post = ({ timestamp, message, postId, author, address, profile }) => {
+    const humanTime = spotifyStyleTime(new Date(timestamp*1000))
     return <div className='post' key={postId}>
         <div className='left'>
             <ProfileTile did={author}/>
@@ -84,6 +83,10 @@ const Post = ({ timestamp, message, postId, author, address, profile }) => {
         <div className='right'>
             <span className="profile-name mt-0">{address || (profile && profile.name) || author}</span>
             <div>{message}</div>
+        </div>
+
+        <div className='meta'>
+            <small>{humanTime}</small>
         </div>
     </div>
 }
@@ -100,7 +103,6 @@ class Page extends Component {
         const { addr } = this.props
         
         // open 3chat space
-        
         const space = await box.openSpace(addr)
 
         let myDid = space.DID;
@@ -159,7 +161,7 @@ class Page extends Component {
         let content
         switch(view) {
             case views.home:
-                content = <Feed {...{ posts }}/>
+                content = <Feed {...{ thread, posts }}/>
                 break
             case views.members:
                 break;
@@ -181,7 +183,17 @@ class Page extends Component {
             
             <Layout>
                 <div className='right'>
+                    {/* <Card>
+                        <ListGroup style={{ width: '18rem' }} variant="flush">
+                            <ListGroup.Item>
+                                Member
+                            </ListGroup.Item>
+                        </ListGroup>
+                    </Card> */}
                     <Card>
+                        <Card.Header>
+                            <p>You're not a member.</p>
+                        </Card.Header>
                         <ListGroup style={{ width: '18rem' }} variant="flush" className='menuitems'>
                             <ListGroup.Item action onClick={() => this.setState({ view: views.home })} active={view == views.home}>
                                 <i className="fas fa-home"></i>  Home

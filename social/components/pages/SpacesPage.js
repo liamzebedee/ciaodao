@@ -6,7 +6,7 @@ import PageTemplate from "./PageTemplate"
 import { useRouter } from 'next/router'
 
 
-import { Modal, Button, Form, ButtonGroup, FormControl } from 'react-bootstrap'
+import { Modal, Button, Form, ButtonGroup, FormControl, ButtonToolbar } from 'react-bootstrap'
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace } from '../../actions'
@@ -34,6 +34,12 @@ header {
     display: flex;
     justify-content: left;
 }
+
+.button-toolbar {
+    button:not(:first-child) { 
+        margin-left: .5em;
+    }
+}
 `
 
 const addresses = [
@@ -48,7 +54,7 @@ const memes = [
 const memedAddresses = addresses.map((addr, i) => {
     const meme = memes[i]
     return addr.slice(0, addr.length - meme.length) + meme
-}).join('\n')
+})
 
 
 function Page({ createSpace, form }) {
@@ -80,13 +86,13 @@ function Page({ createSpace, form }) {
         switch(membershipType){
             case MEMBERSHIP_TYPE_TOKEN:
                 return <div>
-                    <small>Add ERC20 and ERC721 tokens:</small>
-                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses} onChange={onChange}/></PreTextarea>
+                    <small>Enter an ERC20/ERC721 token:</small>
+                    <PreTextarea><Form.Control type="text" placeholder={memedAddresses[0]} onChange={onChange}/></PreTextarea>
                 </div>
             case MEMBERSHIP_TYPE_INVITE:
                 return <div>
                     <small>Add Ethereum addresses:</small>
-                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses} onChange={onChange}/></PreTextarea>
+                    <PreTextarea><Form.Control as="textarea" rows="3" placeholder={memedAddresses.join('\n')} onChange={onChange}/></PreTextarea>
                 </div>
             default:
                 return null
@@ -165,19 +171,19 @@ function Page({ createSpace, form }) {
             </header>
 
             <h1>Spaces</h1>
-            <div>
-                <button className="btn btn-primary" onClick={() => {
+            <ButtonToolbar className='button-toolbar'>
+                <Button variant="primary" onClick={() => {
                     setSubmitted(false)
                     setName('')
                     setMembershipType('')
                     setAddressDetails([])
                     setShowCreateSpaceModal(true)
-                }}>Create space</button> 
+                }}>Create space</Button> 
                 
-                <button className="btn btn-secondary" onClick={() => {
+                <Button variant="secondary" onClick={() => {
                     setShowSearchSpacesModal(true)
-                }}>Find spaces</button>
-            </div>
+                }}>Find spaces</Button>
+            </ButtonToolbar>
             
 
             <Modal 

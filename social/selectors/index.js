@@ -1,3 +1,5 @@
+import { sortBy, reverse } from 'lodash'
+
 export function isLoggedIn(state) {
     return state.user.loggedInUserId !== null
 }
@@ -35,4 +37,10 @@ export function loggedInUser(state) {
 
     let user = state.users[userId]
     return user
+}
+
+export function filterPosts(posts, members) {
+    return reverse(
+        sortBy(posts, 'timestamp')
+    )
 }
