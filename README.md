@@ -9,6 +9,11 @@ Social spaces where only tokenholders can post.
 
 Built at #ETHBerlinZwei.
 
+#### Live deployment
+Currently live on the Goerli Ethereum testnet.
+
+[Faucet](https://faucet.goerli.mudit.blog)
+
 #### Setup
 1. Run a local blockchain using Ganache:
 
