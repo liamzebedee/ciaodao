@@ -1,6 +1,6 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-import "@openzeppelin/contracts/token/ERC/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "./IMembershipResolver.sol";
 
 contract ERC721MembershipResolver is IMembershipResolver {
