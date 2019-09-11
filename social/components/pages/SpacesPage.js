@@ -10,7 +10,7 @@ import { Modal, Button, Form, ButtonGroup, FormControl, ButtonToolbar } from 're
 import Link from 'next/link'
 import { bindActionCreators } from "redux";
 import { createSpace } from '../../actions'
-import Spaces from "../containers/spaces";
+import Spaces from "../containers/Spaces";
 import { format } from "util";
 import { Router } from "next/router";
 

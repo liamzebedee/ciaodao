@@ -7,6 +7,7 @@ import Web3 from 'web3';
 import { ethers, ContractFactory } from 'ethers';
 import { MEMBERSHIP_TYPE_TOKEN, MEMBERSHIP_TYPE_INVITE } from '../components/pages/SpacesPage';
 import { submitThing } from '../actions';
+import { getMembers } from '../selectors';
 
 let provider
 let signer 
@@ -39,6 +40,7 @@ export const SPACES_LOAD = 'SPACES_LOAD'
 export const SPACE_LOAD = 'SPACE_LOAD'
 export const SPACE_LOAD_SUCCESS = 'SPACE_LOAD_SUCCESS'
 
+export const LOAD_POSTS = "LOAD_POSTS"
 export const SPACE_LOAD_POSTS = 'SPACE_LOAD_POSTS'
 export const SPACE_LOAD_POSTS_SUCCESS = 'SPACE_LOAD_POSTS_SUCCESS'
 
@@ -179,6 +181,74 @@ export function* loadSpaces() {
     }
 }
 
+// import { Resolver } from 'did-resolver-broke';
+// import threeid from '3id-resolver';
+// const { getResolver } = require('muport-did-resolver2')
+
+async function getEthereumAddress(did) {
+    let profile = await Box.getProfile(did)
+    let validatedClaim = await Box.idUtils.verifyClaim(profile.proof_did, { audience: did })
+    let record = validatedClaim.doc
+
+    // let resolver = new Resolver({
+    //     '3': () => threeid
+    // })
+    // let record = await resolver.resolve(did)
+    
+    for(let l of record.publicKey) {
+        if(l.ethereumAddress) {
+            return l.ethereumAddress
+        }
+    }
+    console.error(record)
+    throw new Error(`couldn't find ethereum address for did: ${did}`)
+}
+
+export function* loadPosts({ payload }) {
+    const { posts, spaceAddress } = payload
+
+    // Filter posts
+    const spaceMembers = yield select(state => state.spaces.members)
+    const unknownUsers = _.difference(
+        getMembers(posts),
+        spaceMembers
+    )
+
+    console.log(`New members:`)
+    console.log(newMembers)
+
+    // load profiles that we haven't loaded yet
+    const artifact = getArtifact('Space')
+    const contract = new ethers.Contract( 
+        spaceAddress, 
+        artifact.abi, 
+        signer
+    )
+
+    let newMembers = []
+    for(let did of unknownUsers) {
+        let ethAddress = yield call(getEthereumAddress, did)
+
+        // check membership
+        let isMember = yield call(() => contract.functions.isMember(ethAddress))
+        if(isMember || 1) newMembers.push({ did, ethAddress })
+    }
+
+    console.log(newMembers)
+
+    // console.log(posts)
+
+    // const { profiles } = this.props
+    // const newUsers = Array.from(new Set(posts.map(post => post.author).filter(did => !profiles[did])))
+
+    // newUsers.map(did => {
+    //     Box.getProfile(did).then(profile => {
+    //         this.props.addUserProfile(did, profile)
+    //     })
+    // })
+
+    // filterPosts
+}
 
 export function loadProfile() {
 }
@@ -191,4 +261,5 @@ export default function* () {
     yield takeLatest(CREATE_GROUP, createGroup)
     yield takeLatest(SPACES_LOAD, loadSpaces)
     yield takeLatest(SUBMIT_THING, submitThing)
+    yield takeLatest(LOAD_POSTS, loadPosts)
 }

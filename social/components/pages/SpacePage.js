@@ -1,16 +1,17 @@
 import Box from '3box';
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Card, ListGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import styled from 'styled-components';
-import { addUserProfile, loadSpace } from '../../actions';
+import { addUserProfile, loadSpace, loadPosts } from '../../actions';
 import { box } from "../../sagas";
 import { ProfileTile } from "../atoms/ProfileTile";
 import PageTemplate from "./PageTemplate";
 import css from "./space.less";
 import PostThing from '../atoms/PostThing';
-import { filterPosts } from '../../selectors';
+import { filterPosts, getMembers } from '../../selectors';
+import List from 'react-virtualized/dist/commonjs/List'
 
 
 const Layout = styled.div`
@@ -44,6 +45,7 @@ const TEMPORARY_MODERATOR = 'did:muport:QmRTNPefmFga68GnzYPzQR3ZsYYNdQoTVgKCpuBj
 
 const Feed = ({ thread, posts }) => {
     const [postThingKey, setPostThingKey] = useState(0)
+
     return <div className={css.feed}>
         <div className={`heading`}>
             <h3 className='title'>Feed</h3>
@@ -60,14 +62,23 @@ const Feed = ({ thread, posts }) => {
                 }
             }}/>
         </div>
-            
+
         { posts
-        ? filterPosts(posts).map(post => <Post {...post} {...{
+        ? filterPosts(posts).map(post => <Post key={post.postId} {...post} {...{
             address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
         }}/>)
         : null }
 
         <footer></footer>
+    </div>
+}
+
+const Members = ({ posts }) => {
+    let members = getMembers(posts)
+    return <div>
+        {
+            members.map(did => <ProfileTile did={did}/>)
+        }
     </div>
 }
 
@@ -119,8 +130,8 @@ class Page extends Component {
         })
 
         const posts = await thread.getPosts()
-
-        this.loadPosts(posts)
+        
+        this.props.loadPosts(posts, addr)
 
         this.setState({
             posts
@@ -130,20 +141,20 @@ class Page extends Component {
             const posts = await thread.getPosts()
             this.setState({
                 posts
-            })    
-        })
-    }
-
-    loadPosts = (posts) => {
-        const { profiles } = this.props
-        const newUsers = Array.from(new Set(posts.map(post => post.author).filter(did => !profiles[did])))
-
-        newUsers.map(did => {
-            Box.getProfile(did).then(profile => {
-                this.props.addUserProfile(did, profile)
             })
         })
     }
+
+    // loadPosts = (posts) => {
+    //     const { profiles } = this.props
+    //     const newUsers = Array.from(new Set(posts.map(post => post.author).filter(did => !profiles[did])))
+
+    //     newUsers.map(did => {
+    //         Box.getProfile(did).then(profile => {
+    //             this.props.addUserProfile(did, profile)
+    //         })
+    //     })
+    // }
 
     render() {
         const { space, thread, posts } = this.state
@@ -164,6 +175,7 @@ class Page extends Component {
                 content = <Feed {...{ thread, posts }}/>
                 break
             case views.members:
+                content = <Members {...{ posts }}/>
                 break;
             case views.about:
                 content = <div>
@@ -233,7 +245,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(
         {
             loadSpace,
-            addUserProfile
+            addUserProfile,
+            loadPosts
         },
         dispatch
     )

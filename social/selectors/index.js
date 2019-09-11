@@ -44,3 +44,8 @@ export function filterPosts(posts, members) {
         sortBy(posts, 'timestamp')
     )
 }
+
+export function getMembers(posts) {
+    const members = _.uniq(posts.map(post => post.author))
+    return members
+}
