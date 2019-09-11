@@ -10,7 +10,7 @@ contract ERC20MembershipResolver is IMembershipResolver {
         erc20 = IERC20(_IERC20);
     }
 
-    function isMember(address x) public returns (bool) {
+    function isMember(address x) public view returns (bool) {
         return erc20.balanceOf(x) > 0;
     }
 }

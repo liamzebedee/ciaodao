@@ -9,7 +9,7 @@ contract Space is IMembershipResolver {
         membershipResolver = _IMembershipResolver;
     }
 
-    function isMember(address a) public returns (bool) {
+    function isMember(address a) public view returns (bool) {
         return membershipResolver.isMember(a);
     }
 }

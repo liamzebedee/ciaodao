@@ -10,7 +10,7 @@ contract ERC721MembershipResolver is IMembershipResolver {
         erc721 = IERC721(_IERC721);
     }
 
-    function isMember(address x) public returns (bool) {
+    function isMember(address x) public view returns (bool) {
         return erc721.balanceOf(x) > 0;
     }
 }
