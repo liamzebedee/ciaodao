@@ -13,7 +13,7 @@
       "type": "constructor"
     },
     {
-      "constant": false,
+      "constant": true,
       "inputs": [
         {
           "name": "a",
@@ -28,29 +28,29 @@
         }
       ],
       "payable": false,
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"a\",\"type\":\"address\"}],\"name\":\"isMember\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_IMembershipResolver\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol\":\"Space\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":{\"keccak256\":\"0x99ffdafe9fefb691365cd3b39c08676f079a8c8d3dc7df732d106a90f0cc9711\",\"urls\":[\"bzzr://a5780ade01f91b432d0654c0b1cfdca6cd296190fba398a0532d5ec02cf3f61a\"]},\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol\":{\"keccak256\":\"0xf931d4d7ef5476aa1fc33a2bfd7e419507f20544157b42c442b84643b519e773\",\"urls\":[\"bzzr://3a1fdc4c1fc07e9fa791d3be4ba3c9e785d83343c5d3e07eb8a5bd0ea9d33df4\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060405160208061022d8339810180604052602081101561003057600080fd5b8101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505061019c806100916000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a230c52414610030575b600080fd5b6100726004803603602081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061008c565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663a230c524836040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b15801561012e57600080fd5b505af1158015610142573d6000803e3d6000fd5b505050506040513d602081101561015857600080fd5b8101908080519060200190929190505050905091905056fea165627a7a7230582062b412cb7e4dfb898e71d9c72fd592d9169724f3f5ee588ef0b72af9cc03cfdb0029",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a230c52414610030575b600080fd5b6100726004803603602081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061008c565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663a230c524836040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b15801561012e57600080fd5b505af1158015610142573d6000803e3d6000fd5b505050506040513d602081101561015857600080fd5b8101908080519060200190929190505050905091905056fea165627a7a7230582062b412cb7e4dfb898e71d9c72fd592d9169724f3f5ee588ef0b72af9cc03cfdb0029",
-  "sourceMap": "71:321:5:-;;;160:119;8:9:-1;5:2;;;30:1;27;20:12;5:2;160:119:5;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;160:119:5;;;;;;;;;;;;;;;;252:20;231:18;;:41;;;;;;;;;;;;;;;;;;160:119;71:321;;;;;;",
-  "deployedSourceMap": "71:321:5:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;71:321:5;;;;;;;;;;;;;;;;;;;285:105;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;285:105:5;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;330:4;353:18;;;;;;;;;;;:27;;;381:1;353:30;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;353:30:5;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;353:30:5;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;353:30:5;;;;;;;;;;;;;;;;346:37;;285:105;;;:::o",
-  "source": "pragma solidity >=0.4.21 <0.6.0;\n\nimport \"./IMembershipResolver.sol\";\n\ncontract Space is IMembershipResolver {\n    IMembershipResolver membershipResolver;\n\n    constructor(IMembershipResolver _IMembershipResolver) public {\n        membershipResolver = _IMembershipResolver;\n    }\n\n    function isMember(address a) public returns (bool) {\n        return membershipResolver.isMember(a);\n    }\n}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"a\",\"type\":\"address\"}],\"name\":\"isMember\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_IMembershipResolver\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol\":\"Space\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":{\"keccak256\":\"0x76209db192dfd6f5edd8782b004fe03f4bab9886044801ac71a27a81be863963\",\"urls\":[\"bzzr://ef0c35188737e353636f85c9bd48629f416f88d9352965f379f8d72f05e03c45\"]},\"/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol\":{\"keccak256\":\"0x52648025636e99eb460d4d86e702e34476c7bbb47d458fb0074813fd8f0839a0\",\"urls\":[\"bzzr://755672355ba646b88231aa4bd46fc99f58f87ef021589243fba6f52edc34ccab\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060405160208061022b8339810180604052602081101561003057600080fd5b8101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505061019a806100916000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a230c52414610030575b600080fd5b6100726004803603602081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061008c565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663a230c524836040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561012c57600080fd5b505afa158015610140573d6000803e3d6000fd5b505050506040513d602081101561015657600080fd5b8101908080519060200190929190505050905091905056fea165627a7a723058202afe8819e213b1d36df653a8799b90fbfa8cad9d648b85dbea7f97f3c646a5660029",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a230c52414610030575b600080fd5b6100726004803603602081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061008c565b604051808215151515815260200191505060405180910390f35b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663a230c524836040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060206040518083038186803b15801561012c57600080fd5b505afa158015610140573d6000803e3d6000fd5b505050506040513d602081101561015657600080fd5b8101908080519060200190929190505050905091905056fea165627a7a723058202afe8819e213b1d36df653a8799b90fbfa8cad9d648b85dbea7f97f3c646a5660029",
+  "sourceMap": "71:326:5:-;;;160:119;8:9:-1;5:2;;;30:1;27;20:12;5:2;160:119:5;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;160:119:5;;;;;;;;;;;;;;;;252:20;231:18;;:41;;;;;;;;;;;;;;;;;;160:119;71:326;;;;;;",
+  "deployedSourceMap": "71:326:5:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;71:326:5;;;;;;;;;;;;;;;;;;;285:110;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;285:110:5;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;335:4;358:18;;;;;;;;;;;:27;;;386:1;358:30;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;358:30:5;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;358:30:5;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;358:30:5;;;;;;;;;;;;;;;;351:37;;285:110;;;:::o",
+  "source": "pragma solidity >=0.4.21 <0.6.0;\n\nimport \"./IMembershipResolver.sol\";\n\ncontract Space is IMembershipResolver {\n    IMembershipResolver membershipResolver;\n\n    constructor(IMembershipResolver _IMembershipResolver) public {\n        membershipResolver = _IMembershipResolver;\n    }\n\n    function isMember(address a) public view returns (bool) {\n        return membershipResolver.isMember(a);\n    }\n}",
   "sourcePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol",
   "ast": {
     "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol",
     "exportedSymbols": {
       "Space": [
-        222
+        241
       ]
     },
-    "id": 223,
+    "id": 242,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 193,
+        "id": 212,
         "literals": [
           "solidity",
           ">=",
@@ -66,10 +66,10 @@
       {
         "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol",
         "file": "./IMembershipResolver.sol",
-        "id": 194,
+        "id": 213,
         "nodeType": "ImportDirective",
-        "scope": 223,
-        "sourceUnit": 135,
+        "scope": 242,
+        "sourceUnit": 154,
         "src": "34:35:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -80,57 +80,57 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 195,
+              "id": 214,
               "name": "IMembershipResolver",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 134,
+              "referencedDeclaration": 153,
               "src": "89:19:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                 "typeString": "contract IMembershipResolver"
               }
             },
-            "id": 196,
+            "id": 215,
             "nodeType": "InheritanceSpecifier",
             "src": "89:19:5"
           }
         ],
         "contractDependencies": [
-          134
+          153
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 222,
+        "id": 241,
         "linearizedBaseContracts": [
-          222,
-          134
+          241,
+          153
         ],
         "name": "Space",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 198,
+            "id": 217,
             "name": "membershipResolver",
             "nodeType": "VariableDeclaration",
-            "scope": 222,
+            "scope": 241,
             "src": "115:38:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+              "typeIdentifier": "t_contract$_IMembershipResolver_$153",
               "typeString": "contract IMembershipResolver"
             },
             "typeName": {
               "contractScope": null,
-              "id": 197,
+              "id": 216,
               "name": "IMembershipResolver",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 134,
+              "referencedDeclaration": 153,
               "src": "115:19:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                 "typeString": "contract IMembershipResolver"
               }
             },
@@ -139,28 +139,28 @@
           },
           {
             "body": {
-              "id": 207,
+              "id": 226,
               "nodeType": "Block",
               "src": "221:58:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 205,
+                    "id": 224,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 203,
+                      "id": 222,
                       "name": "membershipResolver",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 198,
+                      "referencedDeclaration": 217,
                       "src": "231:18:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                        "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                         "typeString": "contract IMembershipResolver"
                       }
                     },
@@ -168,62 +168,62 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 204,
+                      "id": 223,
                       "name": "_IMembershipResolver",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 200,
+                      "referencedDeclaration": 219,
                       "src": "252:20:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                        "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                         "typeString": "contract IMembershipResolver"
                       }
                     },
                     "src": "231:41:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                      "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                       "typeString": "contract IMembershipResolver"
                     }
                   },
-                  "id": 206,
+                  "id": 225,
                   "nodeType": "ExpressionStatement",
                   "src": "231:41:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 208,
+            "id": 227,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 201,
+              "id": 220,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 200,
+                  "id": 219,
                   "name": "_IMembershipResolver",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
+                  "scope": 227,
                   "src": "172:40:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                    "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                     "typeString": "contract IMembershipResolver"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 199,
+                    "id": 218,
                     "name": "IMembershipResolver",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 134,
+                    "referencedDeclaration": 153,
                     "src": "172:19:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                      "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                       "typeString": "contract IMembershipResolver"
                     }
                   },
@@ -234,12 +234,12 @@
               "src": "171:42:5"
             },
             "returnParameters": {
-              "id": 202,
+              "id": 221,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "221:0:5"
             },
-            "scope": 222,
+            "scope": 241,
             "src": "160:119:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -247,9 +247,9 @@
           },
           {
             "body": {
-              "id": 220,
+              "id": 239,
               "nodeType": "Block",
-              "src": "336:54:5",
+              "src": "341:54:5",
               "statements": [
                 {
                   "expression": {
@@ -257,12 +257,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 217,
+                        "id": 236,
                         "name": "a",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 210,
-                        "src": "381:1:5",
+                        "referencedDeclaration": 229,
+                        "src": "386:1:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -278,32 +278,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 215,
+                        "id": 234,
                         "name": "membershipResolver",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 198,
-                        "src": "353:18:5",
+                        "referencedDeclaration": 217,
+                        "src": "358:18:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                          "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                           "typeString": "contract IMembershipResolver"
                         }
                       },
-                      "id": 216,
+                      "id": 235,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "isMember",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 133,
-                      "src": "353:27:5",
+                      "referencedDeclaration": 152,
+                      "src": "358:27:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$_t_bool_$",
-                        "typeString": "function (address) external returns (bool)"
+                        "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
+                        "typeString": "function (address) view external returns (bool)"
                       }
                     },
-                    "id": 218,
+                    "id": 237,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -311,36 +311,36 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "353:30:5",
+                    "src": "358:30:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 214,
-                  "id": 219,
+                  "functionReturnParameters": 233,
+                  "id": 238,
                   "nodeType": "Return",
-                  "src": "346:37:5"
+                  "src": "351:37:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 221,
+            "id": 240,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isMember",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 211,
+              "id": 230,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 210,
+                  "id": 229,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 221,
+                  "scope": 240,
                   "src": "303:9:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -349,7 +349,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 209,
+                    "id": 228,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "303:7:5",
@@ -366,16 +366,16 @@
               "src": "302:11:5"
             },
             "returnParameters": {
-              "id": 214,
+              "id": 233,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 213,
+                  "id": 232,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 221,
-                  "src": "330:4:5",
+                  "scope": 240,
+                  "src": "335:4:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -383,10 +383,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 212,
+                    "id": 231,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "330:4:5",
+                    "src": "335:4:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -396,33 +396,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "329:6:5"
+              "src": "334:6:5"
             },
-            "scope": 222,
-            "src": "285:105:5",
-            "stateMutability": "nonpayable",
-            "superFunction": 133,
+            "scope": 241,
+            "src": "285:110:5",
+            "stateMutability": "view",
+            "superFunction": 152,
             "visibility": "public"
           }
         ],
-        "scope": 223,
-        "src": "71:321:5"
+        "scope": 242,
+        "src": "71:326:5"
       }
     ],
-    "src": "0:392:5"
+    "src": "0:397:5"
   },
   "legacyAST": {
     "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/Space.sol",
     "exportedSymbols": {
       "Space": [
-        222
+        241
       ]
     },
-    "id": 223,
+    "id": 242,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 193,
+        "id": 212,
         "literals": [
           "solidity",
           ">=",
@@ -438,10 +438,10 @@
       {
         "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol",
         "file": "./IMembershipResolver.sol",
-        "id": 194,
+        "id": 213,
         "nodeType": "ImportDirective",
-        "scope": 223,
-        "sourceUnit": 135,
+        "scope": 242,
+        "sourceUnit": 154,
         "src": "34:35:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -452,57 +452,57 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 195,
+              "id": 214,
               "name": "IMembershipResolver",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 134,
+              "referencedDeclaration": 153,
               "src": "89:19:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                 "typeString": "contract IMembershipResolver"
               }
             },
-            "id": 196,
+            "id": 215,
             "nodeType": "InheritanceSpecifier",
             "src": "89:19:5"
           }
         ],
         "contractDependencies": [
-          134
+          153
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 222,
+        "id": 241,
         "linearizedBaseContracts": [
-          222,
-          134
+          241,
+          153
         ],
         "name": "Space",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 198,
+            "id": 217,
             "name": "membershipResolver",
             "nodeType": "VariableDeclaration",
-            "scope": 222,
+            "scope": 241,
             "src": "115:38:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+              "typeIdentifier": "t_contract$_IMembershipResolver_$153",
               "typeString": "contract IMembershipResolver"
             },
             "typeName": {
               "contractScope": null,
-              "id": 197,
+              "id": 216,
               "name": "IMembershipResolver",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 134,
+              "referencedDeclaration": 153,
               "src": "115:19:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                 "typeString": "contract IMembershipResolver"
               }
             },
@@ -511,28 +511,28 @@
           },
           {
             "body": {
-              "id": 207,
+              "id": 226,
               "nodeType": "Block",
               "src": "221:58:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 205,
+                    "id": 224,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 203,
+                      "id": 222,
                       "name": "membershipResolver",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 198,
+                      "referencedDeclaration": 217,
                       "src": "231:18:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                        "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                         "typeString": "contract IMembershipResolver"
                       }
                     },
@@ -540,62 +540,62 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 204,
+                      "id": 223,
                       "name": "_IMembershipResolver",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 200,
+                      "referencedDeclaration": 219,
                       "src": "252:20:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                        "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                         "typeString": "contract IMembershipResolver"
                       }
                     },
                     "src": "231:41:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                      "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                       "typeString": "contract IMembershipResolver"
                     }
                   },
-                  "id": 206,
+                  "id": 225,
                   "nodeType": "ExpressionStatement",
                   "src": "231:41:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 208,
+            "id": 227,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 201,
+              "id": 220,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 200,
+                  "id": 219,
                   "name": "_IMembershipResolver",
                   "nodeType": "VariableDeclaration",
-                  "scope": 208,
+                  "scope": 227,
                   "src": "172:40:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                    "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                     "typeString": "contract IMembershipResolver"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 199,
+                    "id": 218,
                     "name": "IMembershipResolver",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 134,
+                    "referencedDeclaration": 153,
                     "src": "172:19:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                      "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                       "typeString": "contract IMembershipResolver"
                     }
                   },
@@ -606,12 +606,12 @@
               "src": "171:42:5"
             },
             "returnParameters": {
-              "id": 202,
+              "id": 221,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "221:0:5"
             },
-            "scope": 222,
+            "scope": 241,
             "src": "160:119:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -619,9 +619,9 @@
           },
           {
             "body": {
-              "id": 220,
+              "id": 239,
               "nodeType": "Block",
-              "src": "336:54:5",
+              "src": "341:54:5",
               "statements": [
                 {
                   "expression": {
@@ -629,12 +629,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 217,
+                        "id": 236,
                         "name": "a",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 210,
-                        "src": "381:1:5",
+                        "referencedDeclaration": 229,
+                        "src": "386:1:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -650,32 +650,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 215,
+                        "id": 234,
                         "name": "membershipResolver",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 198,
-                        "src": "353:18:5",
+                        "referencedDeclaration": 217,
+                        "src": "358:18:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IMembershipResolver_$134",
+                          "typeIdentifier": "t_contract$_IMembershipResolver_$153",
                           "typeString": "contract IMembershipResolver"
                         }
                       },
-                      "id": 216,
+                      "id": 235,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "isMember",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 133,
-                      "src": "353:27:5",
+                      "referencedDeclaration": 152,
+                      "src": "358:27:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$_t_bool_$",
-                        "typeString": "function (address) external returns (bool)"
+                        "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
+                        "typeString": "function (address) view external returns (bool)"
                       }
                     },
-                    "id": 218,
+                    "id": 237,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -683,36 +683,36 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "353:30:5",
+                    "src": "358:30:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 214,
-                  "id": 219,
+                  "functionReturnParameters": 233,
+                  "id": 238,
                   "nodeType": "Return",
-                  "src": "346:37:5"
+                  "src": "351:37:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 221,
+            "id": 240,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "isMember",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 211,
+              "id": 230,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 210,
+                  "id": 229,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 221,
+                  "scope": 240,
                   "src": "303:9:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -721,7 +721,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 209,
+                    "id": 228,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "303:7:5",
@@ -738,16 +738,16 @@
               "src": "302:11:5"
             },
             "returnParameters": {
-              "id": 214,
+              "id": 233,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 213,
+                  "id": 232,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 221,
-                  "src": "330:4:5",
+                  "scope": 240,
+                  "src": "335:4:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -755,10 +755,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 212,
+                    "id": 231,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "330:4:5",
+                    "src": "335:4:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -768,20 +768,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "329:6:5"
+              "src": "334:6:5"
             },
-            "scope": 222,
-            "src": "285:105:5",
-            "stateMutability": "nonpayable",
-            "superFunction": 133,
+            "scope": 241,
+            "src": "285:110:5",
+            "stateMutability": "view",
+            "superFunction": 152,
             "visibility": "public"
           }
         ],
-        "scope": 223,
-        "src": "71:321:5"
+        "scope": 242,
+        "src": "71:326:5"
       }
     ],
-    "src": "0:392:5"
+    "src": "0:397:5"
   },
   "compiler": {
     "name": "solc",
@@ -789,7 +789,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.10",
-  "updatedAt": "2019-09-06T21:59:26.211Z",
+  "updatedAt": "2019-09-10T23:59:19.985Z",
   "devdoc": {
     "methods": {}
   },

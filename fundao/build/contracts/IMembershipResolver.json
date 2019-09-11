@@ -2,7 +2,7 @@
   "contractName": "IMembershipResolver",
   "abi": [
     {
-      "constant": false,
+      "constant": true,
       "inputs": [
         {
           "name": "x",
@@ -17,29 +17,29 @@
         }
       ],
       "payable": false,
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"x\",\"type\":\"address\"}],\"name\":\"isMember\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":\"IMembershipResolver\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":{\"keccak256\":\"0x99ffdafe9fefb691365cd3b39c08676f079a8c8d3dc7df732d106a90f0cc9711\",\"urls\":[\"bzzr://a5780ade01f91b432d0654c0b1cfdca6cd296190fba398a0532d5ec02cf3f61a\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"x\",\"type\":\"address\"}],\"name\":\"isMember\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":\"IMembershipResolver\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol\":{\"keccak256\":\"0x76209db192dfd6f5edd8782b004fe03f4bab9886044801ac71a27a81be863963\",\"urls\":[\"bzzr://ef0c35188737e353636f85c9bd48629f416f88d9352965f379f8d72f05e03c45\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "pragma solidity >=0.4.21 <0.6.0;\n\ninterface IMembershipResolver {\n    function isMember(address x) external returns (bool);\n}",
+  "source": "pragma solidity >=0.4.21 <0.6.0;\n\ninterface IMembershipResolver {\n    function isMember(address x) external view returns (bool);\n}",
   "sourcePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol",
   "ast": {
     "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol",
     "exportedSymbols": {
       "IMembershipResolver": [
-        134
+        153
       ]
     },
-    "id": 135,
+    "id": 154,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 126,
+        "id": 145,
         "literals": [
           "solidity",
           ">=",
@@ -58,9 +58,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 134,
+        "id": 153,
         "linearizedBaseContracts": [
-          134
+          153
         ],
         "name": "IMembershipResolver",
         "nodeType": "ContractDefinition",
@@ -68,22 +68,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 133,
+            "id": 152,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isMember",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 129,
+              "id": 148,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 128,
+                  "id": 147,
                   "name": "x",
                   "nodeType": "VariableDeclaration",
-                  "scope": 133,
+                  "scope": 152,
                   "src": "88:9:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -92,7 +92,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 127,
+                    "id": 146,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "88:7:3",
@@ -109,16 +109,16 @@
               "src": "87:11:3"
             },
             "returnParameters": {
-              "id": 132,
+              "id": 151,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 131,
+                  "id": 150,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 133,
-                  "src": "117:4:3",
+                  "scope": 152,
+                  "src": "122:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -126,10 +126,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 130,
+                    "id": 149,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "117:4:3",
+                    "src": "122:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -139,33 +139,33 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "116:6:3"
+              "src": "121:6:3"
             },
-            "scope": 134,
-            "src": "70:53:3",
-            "stateMutability": "nonpayable",
+            "scope": 153,
+            "src": "70:58:3",
+            "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 135,
-        "src": "34:91:3"
+        "scope": 154,
+        "src": "34:96:3"
       }
     ],
-    "src": "0:125:3"
+    "src": "0:130:3"
   },
   "legacyAST": {
     "absolutePath": "/Users/liamz/Documents/open-source/everest/fundao/contracts/IMembershipResolver.sol",
     "exportedSymbols": {
       "IMembershipResolver": [
-        134
+        153
       ]
     },
-    "id": 135,
+    "id": 154,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 126,
+        "id": 145,
         "literals": [
           "solidity",
           ">=",
@@ -184,9 +184,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 134,
+        "id": 153,
         "linearizedBaseContracts": [
-          134
+          153
         ],
         "name": "IMembershipResolver",
         "nodeType": "ContractDefinition",
@@ -194,22 +194,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 133,
+            "id": 152,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "isMember",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 129,
+              "id": 148,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 128,
+                  "id": 147,
                   "name": "x",
                   "nodeType": "VariableDeclaration",
-                  "scope": 133,
+                  "scope": 152,
                   "src": "88:9:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -218,7 +218,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 127,
+                    "id": 146,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "88:7:3",
@@ -235,16 +235,16 @@
               "src": "87:11:3"
             },
             "returnParameters": {
-              "id": 132,
+              "id": 151,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 131,
+                  "id": 150,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 133,
-                  "src": "117:4:3",
+                  "scope": 152,
+                  "src": "122:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -252,10 +252,10 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 130,
+                    "id": 149,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "117:4:3",
+                    "src": "122:4:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -265,20 +265,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "116:6:3"
+              "src": "121:6:3"
             },
-            "scope": 134,
-            "src": "70:53:3",
-            "stateMutability": "nonpayable",
+            "scope": 153,
+            "src": "70:58:3",
+            "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 135,
-        "src": "34:91:3"
+        "scope": 154,
+        "src": "34:96:3"
       }
     ],
-    "src": "0:125:3"
+    "src": "0:130:3"
   },
   "compiler": {
     "name": "solc",
@@ -286,7 +286,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.10",
-  "updatedAt": "2019-09-06T21:59:26.209Z",
+  "updatedAt": "2019-09-10T23:59:19.984Z",
   "devdoc": {
     "methods": {}
   },
