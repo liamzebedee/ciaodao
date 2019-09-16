@@ -16,6 +16,8 @@ import { Router } from "next/router";
 
 import { SpaceCard } from '../atoms/SpaceCard'
 
+import css from './spaces.less'
+
 const MyLoader = () => (
     <ContentLoader 
       height={160}
@@ -40,10 +42,7 @@ const Spaces = ({loading, data }) => <div>
   loading 
   ? <MyLoader/>
   : <div>
-    <CardColumns>
-    { 
-      data.map((d, i) => <SpaceCard {...d} key={i} />)
-    }
+    <CardColumns className={css.spaces}>
     { 
       data.map((d, i) => <SpaceCard {...d} key={i} />)
     }

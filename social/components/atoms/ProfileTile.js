@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import makeBlockie from 'ethereum-blockies-base64';
 import Box from '3box';
-import resolve from 'did-resolver';
+
 
 import { useState, useEffect } from 'react'
 import { isRegExp } from 'util';
 
-async function getEthAddress(did) {
-  const doc = await resolve(did)
-  let addrs = doc.publicKey.filter(k => k.ethereumAddress)
-  return addrs[0]
-}
+// async function getEthAddress(did) {
+//   const doc = await resolve(did)
+//   let addrs = doc.publicKey.filter(k => k.ethereumAddress)
+//   return addrs[0]
+// }
 
 
 const ProfileTile = ({ profile, address, did }) => {

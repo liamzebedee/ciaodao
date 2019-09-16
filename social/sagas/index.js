@@ -46,7 +46,7 @@ export const SPACE_LOAD_POSTS_SUCCESS = 'SPACE_LOAD_POSTS_SUCCESS'
 
 export const SUBMIT_THING = 'SUBMIT_THING'
 
-
+export const FETCH_PROFILE = 'FETCH_PROFILE'
 
 function getArtifact(name) {
     const artifact = require(`../chain/${name}.json`)
@@ -250,7 +250,30 @@ export function* loadPosts({ payload }) {
     // filterPosts
 }
 
-export function loadProfile() {
+export function* fetchProfile({ payload: { did } }) {
+    let profile = yield call(() => Box.getProfile(did))
+
+
+    /*
+    A user with a 3box profile will return something like:
+    {
+        emoji: "😉"
+        image: [{…}]
+        memberSince: "Alpha"
+        name: "Liam Zebedee"
+        proof_did: "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE1NjcyNzQyMDksImlzcyI6ImRpZDptdXBvcnQ6UW1ZcVNHTEdYOWFWNTJNaUd4N29mZWpNdktoM3FzSjJ5U3JXQ3V3Mlhpa0prQSJ9.JRVlZ3sVlbUO_JrCa2_hWdQwwklTWLCkXNQnl_oYQU1bjqrCi3k8DgyNgbI2gnXPdaQwf8_ZJpAt3JRi7k6Qhg"
+        proof_github: "https://gist.githubusercontent.com/liamzebedee/5407cac8e18f5c0cabfe47127556c7de/raw/3e8595c3a1a56a4311f8c2cf232fbccf7037046f/gistfile1.txt"
+        proof_twitter: "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE1NjczNDE2MDYsInN1YiI6ImRpZDptdXBvcnQ6UW1ZcVNHTEdYOWFWNTJNaUd4N29mZWpNdktoM3FzSjJ5U3JXQ3V3Mlhpa0prQSIsImNsYWltIjp7InR3aXR0ZXJfaGFuZGxlIjoibGlhbXplYmVkZWUiLCJ0d2l0dGVyX3Byb29mIjoiaHR0cHM6Ly90d2l0dGVyLmNvbS9saWFtemViZWRlZS9zdGF0dXMvMTE2ODE0MTQ2Mzk3ODQ2MzIzNSJ9LCJpc3MiOiJkaWQ6aHR0cHM6dmVyaWZpY2F0aW9ucy4zYm94LmlvIn0.CaRRGs7nZnOFV0bmmkrCHYEFK3bV27g7lGsVh6035aPxykolXKG5USRWUA0tOwz_WJTCcxqrzm1wy7ELN4XLqw"
+        website: "https://24-7.dev"
+    }
+
+    whereas one without will look like:
+    {
+        memberSince: "Alpha"
+        proof_did: "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE1NjY3MTExMzUsImlzcyI6ImRpZDptdXBvcnQ6UW1SVE5QZWZtRmdhNjhHbnpZUHpRUjNac1lZTmRRb1RWZ0tDcHVCalpRclJUWiJ9.Sy366ESexD3JQ0qgNggsavWWcFk92mmfjvez9vMVUKE6wTf9gfWzG4Y5oOZHPb4s9hVVF9JErSleqaHpCx4MVA"
+    }
+
+    */
 }
 
 
@@ -262,4 +285,5 @@ export default function* () {
     yield takeLatest(SPACES_LOAD, loadSpaces)
     yield takeLatest(SUBMIT_THING, submitThing)
     yield takeLatest(LOAD_POSTS, loadPosts)
+    yield takeLatest(FETCH_PROFILE, fetchProfile)
 }

@@ -6,12 +6,12 @@ import { bindActionCreators } from "redux";
 import styled from 'styled-components';
 import { addUserProfile, loadSpace, loadPosts } from '../../actions';
 import { box } from "../../sagas";
-import { ProfileTile } from "../atoms/ProfileTile";
+import LazyProfileTile from "../atoms/LazyProfileTile";
 import PageTemplate from "./PageTemplate";
 import css from "./space.less";
 import PostThing from '../atoms/PostThing';
 import { filterPosts, getMembers } from '../../selectors';
-import List from 'react-virtualized/dist/commonjs/List'
+
 
 
 const Layout = styled.div`
@@ -88,7 +88,7 @@ const Post = ({ timestamp, message, postId, author, address, profile }) => {
     const humanTime = spotifyStyleTime(new Date(timestamp*1000))
     return <div className='post' key={postId}>
         <div className='left'>
-            <ProfileTile did={author}/>
+            <LazyProfileTile did={author}/>
         </div>
 
         <div className='right'>

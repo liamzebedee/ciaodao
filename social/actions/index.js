@@ -1,4 +1,4 @@
-import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3, SUBMIT_THING, SPACES_LOAD, SPACE_LOAD, LOAD_POSTS } from "../sagas";
+import { LOAD_BOX3, VISIT_SPACES, CREATE_GROUP, LOAD_WEB3, SUBMIT_THING, SPACES_LOAD, SPACE_LOAD, LOAD_POSTS, FETCH_PROFILE } from "../sagas";
 
 export function loadWeb3() {
     return {
@@ -64,6 +64,15 @@ export function loadPosts(posts, spaceAddress) {
         payload: {
             posts,
             spaceAddress
+        }
+    }
+}
+
+export function fetchProfile(did) {
+    return {
+        type: FETCH_PROFILE,
+        payload: {
+            did
         }
     }
 }

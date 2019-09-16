@@ -49,3 +49,7 @@ export function getMembers(posts) {
     const members = _.uniq(posts.map(post => post.author))
     return members
 }
+
+export function getProfile(state, did) {
+    return null
+}
