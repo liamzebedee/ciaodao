@@ -71,28 +71,21 @@ module.exports = {
 
     // gasPrice: gas price in gwei
     ropsten: {
-      provider: () => new HDWalletProvider(process.env.GOERLI_MNEMONIC, "https://ropsten.infura.io/v3/" + process.env.INFURA_API_KEY),
-      network_id: 3,
-      gas: 3000000,
-      gasPrice: 10000000000
+      provider: () => new PrivateKeyProvider(process.env.TRUFFLE_PRIVATE_KEY, "https://ropsten.infura.io/v3/" + process.env.INFURA_API_KEY),
+      network_id: 3
     },
     kovan: {
       provider: () => new HDWalletProvider(process.env.GOERLI_MNEMONIC, "https://kovan.infura.io/v3/" + process.env.INFURA_API_KEY),
-      network_id: 42,
-      gas: 3000000,
-      gasPrice: 10000000000
+      network_id: 42
     },
     goerli: {
       provider: () => new PrivateKeyProvider(process.env.TRUFFLE_PRIVATE_KEY, "https://goerli.infura.io/v3/" + process.env.INFURA_API_KEY),
-      network_id: 5,
-      gasPrice: 10000000000
+      network_id: 5
     },
     // main ethereum network(mainnet)
     main: {
       provider: () => new HDWalletProvider(process.env.GOERLI_MNEMONIC, "https://mainnet.infura.io/v3/" + process.env.INFURA_API_KEY),
-      network_id: 1,
-      gas: 3000000,
-      gasPrice: 10000000000
+      network_id: 1
     }
 
     // Useful for private networks
