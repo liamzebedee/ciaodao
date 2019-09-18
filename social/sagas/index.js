@@ -87,6 +87,13 @@ export function* loadWeb3() {
     // provider = new ethers.providers.Web3Provider(window.ethereum);
     provider = new ethers.providers.Web3Provider(web3.currentProvider)
     signer = provider.getSigner(0);
+    // yield call(() => new Promise((res,rej) => {
+    //     provider.on('ready', res)
+    //     setTimeout(rej, 5000)
+    // }))
+
+    const network = yield call(() => provider.getNetwork())
+    chainId = network.chainId
     // let network = yield call(provider.getNetwork)
     // chainId = MAINNET
     // chainId = MAINNET
