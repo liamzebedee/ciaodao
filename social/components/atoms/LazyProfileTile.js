@@ -17,6 +17,8 @@ import { bindActionCreators } from 'redux'
 // image = makeBlockie('did:muport:QmYqSGLGX9aV52MiGx7ofejMvKh3qsJ2ySrWCuw2XikJkA')
 // }
 
+const anonProfile = '/static/anonymous.jpg'
+
 const LazyProfileTile = ({ did, profile, fetchProfile }) => {
     if(!profile) {
         fetchProfile(did)
@@ -27,7 +29,7 @@ const LazyProfileTile = ({ did, profile, fetchProfile }) => {
             <a href={profile ? `https://3box.io/${address}` : '#'} className="profileTile_info_link" target="_blank" rel="noopener noreferrer">
                 <img
                 style={{ width: 49, height: 49 }}
-                src={profile ? image : ''}
+                src={profile ? image : anonProfile}
                 className="profile-img"
                 alt="profile"
                 />
