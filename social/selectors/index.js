@@ -1,4 +1,4 @@
-import { sortBy, reverse } from 'lodash'
+import _, { sortBy, reverse } from 'lodash'
 
 export function isLoggedIn(state) {
     return state.user.loggedInUserId !== null
@@ -52,4 +52,11 @@ export function getMembers(posts) {
 
 export function getProfile(state, did) {
     return null
+}
+
+// Maybe we can list spaces of other networks in future
+// But we should just name them properly for now
+export function selectSpaces(state) {
+    const spaces = _.filter(Object.values(state.spaces.data), { chainId: state.flows.chainId })
+    return spaces
 }

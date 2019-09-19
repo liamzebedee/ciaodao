@@ -9,7 +9,8 @@ const initialState = {
         step: 'start'
     },
     [WEB3_LOADING]: true,
-    [BOX3_LOADING]: true
+    [BOX3_LOADING]: true,
+    chainId: null
 }
 
 
@@ -24,9 +25,12 @@ export default function(state = initialState, action) {
                 }
             }
         case WEB3_LOADED:
+            const { payload: { chainId } } = action
+            
             return {
                 ...state,
-                [WEB3_LOADING]: false
+                [WEB3_LOADING]: false,
+                chainId
             }
         case LOAD_BOX3_COMPLETE:
             return {

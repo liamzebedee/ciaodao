@@ -17,6 +17,7 @@ import { Router } from "next/router";
 import { SpaceCard } from '../atoms/SpaceCard'
 
 import css from './spaces.less'
+import { selectSpaces } from "../../selectors";
 
 const MyLoader = () => (
     <ContentLoader 
@@ -54,7 +55,7 @@ const Spaces = ({loading, data }) => <div>
 
 function mapStateToProps(state, props) {
   return {
-      data: Object.values(state.spaces.data),
+      data: selectSpaces(state),
       loading: false
   }
 }

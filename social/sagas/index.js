@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select, fork, cancelled, take } from 'redux-saga/effects'
+import { call, put, takeLatest, select, fork, cancelled, take, takeEvery, takeLeading } from 'redux-saga/effects'
 import { eventChannel, END } from 'redux-saga'
 import Box from '3box';
 import Router from 'next/router'
@@ -98,7 +98,10 @@ export function* loadWeb3() {
     // chainId = MAINNET
     // chainId = MAINNET
     yield put({
-        type: WEB3_LOADED
+        type: WEB3_LOADED,
+        payload: {
+            chainId,
+        }
     })
 }
 
@@ -172,7 +175,8 @@ export function* createGroup({ payload }) {
         type: CREATE_GROUP_WEB3_SUCCESS,
         payload: {
             name,
-            space
+            space,
+            chainId
         }
     })
 
@@ -237,7 +241,10 @@ export function* loadPosts({ payload }) {
         let ethAddress = yield call(getEthereumAddress, did)
 
         // check membership
-        let isMember = yield call(() => contract.functions.isMember(ethAddress))
+        // TODO(liamz) fully implement contract-wise
+
+        // let isMember = yield call(() => contract.functions.isMember(ethAddress))
+        let isMember = true
         if(isMember || 1) newMembers.push({ did, ethAddress })
     }
 
@@ -260,7 +267,8 @@ export function* loadPosts({ payload }) {
 export function* fetchProfile({ payload: { did } }) {
     let profile = yield call(() => Box.getProfile(did))
 
-
+    console.log(1,profile)
+    return
     /*
     A user with a 3box profile will return something like:
     {
@@ -292,5 +300,5 @@ export default function* () {
     yield takeLatest(SPACES_LOAD, loadSpaces)
     yield takeLatest(SUBMIT_THING, submitThing)
     yield takeLatest(LOAD_POSTS, loadPosts)
-    yield takeLatest(FETCH_PROFILE, fetchProfile)
+    yield takeLeading(FETCH_PROFILE, fetchProfile)
 }

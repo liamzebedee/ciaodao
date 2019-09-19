@@ -6,8 +6,9 @@ const initialState = {
     createdSpaces: [],
 }
 
-function Space(addr, name, thread) {
+function Space(addr, name, thread, chainId) {
     this.addr = addr
+    this.chainId = chainId
     this.members = []
     this.posts = []
     this.name = name
@@ -17,14 +18,14 @@ function Space(addr, name, thread) {
 export default function reduce(state = initialState, action) {
     switch(action.type) {
         case CREATE_GROUP_WEB3_SUCCESS: {
-            const { space, name, thread } = action.payload
+            const { space, name, thread, chainId } = action.payload
             const { createdSpaces, data } = state
             return {
                 ...state,
                 createdSpaces: createdSpaces.concat([ space ]),
                 data: {
                     ...data,
-                    [space]: new Space(space, name, thread)
+                    [space]: new Space(space, name, thread, chainId)
                 }
             }
         }

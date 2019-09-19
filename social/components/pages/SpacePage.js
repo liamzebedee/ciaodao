@@ -65,7 +65,7 @@ const Feed = ({ thread, posts }) => {
 
         { posts
         ? filterPosts(posts).map(post => <Post key={post.postId} {...post} {...{
-            address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
+            // address: "0x1cdad033df958291390ba7265be81b84cb6bfcfb"
         }}/>)
         : null }
 
@@ -77,7 +77,7 @@ const Members = ({ posts }) => {
     let members = getMembers(posts)
     return <div>
         {
-            members.map(did => <ProfileTile did={did}/>)
+            members.map(did => <LazyProfileTile did={did}/>)
         }
     </div>
 }
@@ -139,6 +139,8 @@ class Page extends Component {
 
         thread.onUpdate(async res => {
             const posts = await thread.getPosts()
+            this.props.loadPosts(posts, addr)
+
             this.setState({
                 posts
             })
