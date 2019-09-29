@@ -1,0 +1,6 @@
+[submodule "contracts"]
+	path = contracts
+	url = https://github.com/liamzebedee/ciaodao-contracts
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/liamzebedee/ciaodao-frontend
